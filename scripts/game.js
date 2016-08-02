@@ -1,50 +1,86 @@
-function createGame(canvasSelector){
+function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
         bricks = [];
     var numberOfBricksInRow = 8,
-          numberOfBricksInCol = 5;
+        numberOfBricksInCol = 5;
 
-          function gameLoop() {
-              generateBricks();
-              drawBricks();
-          }
+    function gameLoop() {
+        var ball = generateBall();
+        drawBall(ball, context);
+        generateBricks();
+        drawBricks();
+    }
 
-        function drawBricks() {
-            debugger;
-            var image = new Image();
-            image.src = "images/brick.png";
-            for (var i = 0; i < bricks.length; i++) {
-                var currentBrick = bricks[i];
-                context.beginPath();
-                context.rect(currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);               
-                //context.drawImage(image, currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);               
-                context.fill();
-                context.closePath();                
-            }  
+    function drawBall(ball, context) {
+        context.beginPath();
+        context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+        context.fill();
+        context.closePath();
+    }
+
+    function drawBricks() {
+        debugger;
+        var image = new Image();
+        image.src = "images/brick.png";
+        for (var i = 0; i < bricks.length; i++) {
+            var currentBrick = bricks[i];
+            context.beginPath();
+            context.rect(currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);
+            //context.drawImage(image, currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);               
+            context.fill();
+            context.closePath();
+        }
+    }
+
+    function createBall(x, y, radius, speed, direction) {
+        var ball = {
+            x: x,
+            y: y,
+            radius: radius,
+            speed: speed,
+            direction: direction,
+            move: move
+        };
+
+        function move() {
+            this.x += this.direction[0] * this.speed;
+            this.y += this.direction[1] * this.speed;
         }
 
-        function createBrick(x,y) {
-            var brick = {
-                x: x,
-                y: y,
-                width: 50,
-                height: 20
-            };
+        return ball;
+    }
 
-            return brick;
-        }
+    function createBrick(x, y) {
+        var brick = {
+            x: x,
+            y: y,
+            width: 50,
+            height: 20
+        };
 
-        function generateBricks() {   
-            for (var i = 1; i <= numberOfBricksInRow; i+=1) {
-                for(var j= 1; j <= numberOfBricksInCol; j += 1){
-                     bricks.push(createBrick(i * 60, j * 35));    
-                }                    
+        return brick;
+    }
+
+    function generateBall() {
+        var x = canvas.width / 2,
+            y = canvas.height - 32,
+            speed = 5,
+            direction = [-1, -1],
+            ball = createBall(x, y, 12, speed, direction);
+        return ball;
+    }
+
+    function generateBricks() {
+        for (var i = 1; i <= numberOfBricksInRow; i += 1) {
+            for (var j = 1; j <= numberOfBricksInCol; j += 1) {
+                bricks.push(createBrick(i * 60, j * 35));
             }
         }
+    }
 
-        return {
-        "start": function() {             
+    return {
+        "start": function () {
             gameLoop();
         }
     };
