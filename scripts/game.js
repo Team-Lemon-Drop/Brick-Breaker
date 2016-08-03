@@ -12,11 +12,13 @@ function createGame(canvasSelector) {
         drawBricks();
     }
 
+
     function drawBall(ball, context) {
-        context.beginPath();
-        context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
-        context.fill();
-        context.closePath();
+        var image = new Image();
+        image.onload = function () {
+            context.drawImage(image, ball.x, ball.y, 30, 30);
+        }
+        image.src = "images/lemon-slice.png";
     }
 
     function drawBricks() {
@@ -63,8 +65,8 @@ function createGame(canvasSelector) {
     }
 
     function generateBall() {
-        var x = canvas.width / 2,
-            y = canvas.height - 32,
+        var x = canvas.width / 2 - 20,
+            y = canvas.height - 50,
             speed = 5,
             direction = [-1, -1],
             ball = createBall(x, y, 12, speed, direction);
