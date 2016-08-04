@@ -5,6 +5,7 @@ function createGame(canvasSelector) {
         canvasWidth = canvas.width,
         ball = generateBall(),
         bricks = [],
+        bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5,
         padHeight = 10,
@@ -26,24 +27,20 @@ function createGame(canvasSelector) {
                 isMoving = true;
             }
         }, false);
-        generateBricks();
         drawPad();
-        drawBricks();
     }
 
 
     function drawBall(ball, context) {
 
+        var image = new Image();
+        image.src = "images/lemon-slice.png";
+        var pattern = context.createPattern(image,'repeat');
+
         context.beginPath();
         context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+        context.fillStyle = pattern;
         context.fill();
-        context.closePath();
-
-        // var image = new Image();
-        // image.onload = function() {
-        //     context.drawImage(image, ball.x, ball.y, 30, 30);
-        // };
-        // image.src = "images/lemon-slice.png";
     }
 
     function moveBall() {
@@ -77,17 +74,19 @@ function createGame(canvasSelector) {
     }
 
     function drawBricks() {
-        debugger;
-        var image = new Image();
-        image.src = "images/brick.png";
-        for (var i = 0; i < bricks.length; i++) {
-            var currentBrick = bricks[i];
-            context.beginPath();
-            context.rect(currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);
-            //context.drawImage(image, currentBrick.x, currentBrick.y, currentBrick.width, currentBrick.height);               
-            context.fill();
-            context.closePath();
-        }
+        generateBricks();
+        var imgs = [];
+        for (var j = 0; j < bricks.length; j++) { 
+            var img = new Image();
+            img.src = bricks[j].image;
+            imgs.push(img);             
+         }
+
+         $.each(imgs, function(key, value ) {
+             value.onload = function(){
+                context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height );
+            };
+        });       
     }
 
     function createBall(x, y, radius, speed, direction) {
@@ -109,11 +108,13 @@ function createGame(canvasSelector) {
     }
 
     function createBrick(x, y) {
+        var randomIndex = (Math.random() * (bricksImagesPaths.length - 0) + 0) | 0;
         var brick = {
             x: x,
             y: y,
             width: 50,
-            height: 20
+            height: 20, 
+            image: bricksImagesPaths[randomIndex]
         };
 
         return brick;
@@ -138,6 +139,7 @@ function createGame(canvasSelector) {
 
     return {
         "start": function() {
+            drawBricks();
             gameLoop();
         }
     };
