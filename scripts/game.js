@@ -1,24 +1,39 @@
 function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
+        canvasHeight = canvas.height,
+        canvasWidth = canvas.width,
         bricks = [];
     var numberOfBricksInRow = 8,
         numberOfBricksInCol = 5;
+    var padHeight = 10,
+        padWidth = 85,
+        padX = (canvasWidth - padWidth) / 2,
+        padY = (canvasHeight - padHeight)-5;
 
     function gameLoop() {
         var ball = generateBall();
         drawBall(ball, context);
         generateBricks();
+        drawPad();
         drawBricks();
     }
 
 
     function drawBall(ball, context) {
         var image = new Image();
-        image.onload = function () {
+        image.onload = function() {
             context.drawImage(image, ball.x, ball.y, 30, 30);
         }
         image.src = "images/lemon-slice.png";
+    }
+
+       function drawPad() {
+        context.beginPath();
+        context.rect(padX, padY, padWidth, padHeight);
+        context.fillStyle = "black";
+        context.fill();
+        context.closePath();
     }
 
     function drawBricks() {
@@ -82,7 +97,7 @@ function createGame(canvasSelector) {
     }
 
     return {
-        "start": function () {
+        "start": function() {
             gameLoop();
         }
     };
