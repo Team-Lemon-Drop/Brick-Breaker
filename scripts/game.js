@@ -1,8 +1,6 @@
 function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
-        canvasHeight = canvas.height,
-        canvasWidth = canvas.width,
 
         ball = generateBall(),
         ballImage = new Image(),
@@ -13,32 +11,46 @@ function createGame(canvasSelector) {
         prevCoordinatesY,
         isMoving = false,
 
+        pad = generatePad(),
+        padMovingSpeed = 25,
+        padOffset = 30,
+        onLeftArrowPressed = false,
+        onRightArrowPressed = false,
+
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
-        numberOfBricksInCol = 5,
+        numberOfBricksInCol = 5;
 
-        padHeight = 10,
-        padWidth = 85,
-        padX = (canvasWidth - padWidth) / 2,
-        padY = (canvasHeight - padHeight) - 5;
-
-    function gameLoop() {
+           function gameLoop() {
 
         drawBall(ball, context);
-        window.addEventListener('keyup', function (ev) {
+        //changed to keydown
+        window.addEventListener('keydown', function(ev) {
             if ((ev.keyCode == 32) && isMoving === false) {
                 moveBall();
                 isMoving = true;
             }
+            if (ev.keyCode == 39) {
+                console.log(ev);
+                movePad();
+                onRightArrowPressed = true;
+                onLeftArrowPressed = false;
+
+            } else if (ev.keyCode == 37) {
+                console.log(ev);
+                movePad();
+                onRightArrowPressed = false;
+                onLeftArrowPressed = true;
+
+            }
         }, false);
-        drawPad();
     }
 
     function drawBall(ball, context) {
 
         ballImage.src = ballImagePath,
-            ballImage.onload = function () {
+            ballImage.onload = function() {
                 context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
             };
         context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
@@ -60,6 +72,8 @@ function createGame(canvasSelector) {
         }
         if (ball.y < 0 || ball.y + ball.radius * 2 > canvas.height) {
             ballDeltaY *= -1;
+        }else if (padCollisionWithBall(pad, ball)) { //need some help here, pls
+            ballDeltaY *= -1;
         }
 
         bricks.some(brick => collisionWithBricks(ball, brick));
@@ -69,7 +83,10 @@ function createGame(canvasSelector) {
 
     function collisionWithBricks(ball, brick) {
 
-        var half = { x: (brick.width / 2), y: (brick.height / 2) },
+        var half = {
+                x: (brick.width / 2),
+                y: (brick.height / 2)
+            },
             center = {
                 x: ball.x + ball.radius - (brick.x + half.x),
                 y: ball.y + ball.radius - (brick.y + half.y)
@@ -108,11 +125,44 @@ function createGame(canvasSelector) {
     }
 
     function drawPad() {
-        context.beginPath();
-        context.rect(padX, padY, padWidth, padHeight);
+            context.beginPath();
+        context.rect(pad.x, pad.y, pad.width, pad.height);
         context.fillStyle = "black";
         context.fill();
         context.closePath();
+ 
+    }
+
+    
+    function movePad() {
+        context.clearRect(pad.x - padOffset, pad.y,
+            2 * pad.width + padOffset, pad.height);
+        console.log(pad.width);
+        drawPad();
+
+        if (onRightArrowPressed && pad.x < canvas.width - (pad.width)) {
+            if (pad.x -pad.width <canvas.width) {
+                pad.x += padMovingSpeed;
+            } else {
+                pad.x = canvas.width;
+                return;
+            }
+        } else if (onLeftArrowPressed) {
+            if (pad.x > 0) {
+                pad.x -= padMovingSpeed;
+            } else {
+                pad.x = 0;
+                return;
+            }
+        }
+    };
+
+    function padCollisionWithBall(pad, ball) {
+        if (ball.x - ball.radius > pad.x &&
+            ball.x - ball.radius < pad.x + pad.width) {
+            return true;
+        }
+        return false;
     }
 
     function drawBricks() {
@@ -124,8 +174,8 @@ function createGame(canvasSelector) {
             imgs.push(img);
         }
 
-        $.each(imgs, function (key, value) {
-            value.onload = function () {
+        $.each(imgs, function(key, value) {
+            value.onload = function() {
                 context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height);
             };
         });
@@ -149,6 +199,26 @@ function createGame(canvasSelector) {
         return ball;
     }
 
+        function createPad(x, y, width, height ) {
+        var pad = {
+            x: x,
+            y: y,
+            width: width,
+            height: height
+        };
+        return pad;
+    }
+
+    function generatePad() {
+        var x = (canvas.width - 85) / 2,
+            y = (canvas.height - 10) - 5,
+            width = 85,
+            height = 10,
+            pad = createPad(x, y, width, height );
+        return pad;
+
+    };
+
     function createBrick(x, y) {
         var randomIndex = (Math.random() * (bricksImagesPaths.length - 0) + 0) | 0;
         var brick = {
@@ -167,7 +237,7 @@ function createGame(canvasSelector) {
         var radius = 15,
             x = canvas.width / 2 - radius,
             y = canvas.height - 50,
-            speed = 5,
+            speed = 3, //decrease the speed
             direction = [-1, -1],
 
             ball = createBall(x, y, radius, speed, direction);
@@ -184,7 +254,7 @@ function createGame(canvasSelector) {
     }
 
     return {
-        "start": function () {
+        "start": function() {
             drawBricks();
             gameLoop();
         }
