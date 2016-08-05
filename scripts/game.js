@@ -3,17 +3,21 @@ function createGame(canvasSelector) {
         context = canvas.getContext("2d"),
         canvasHeight = canvas.height,
         canvasWidth = canvas.width,
+
         ball = generateBall(),
         ballImage = new Image(),
+        ballImagePath = "images/lemon-slice.png",
         ballDeltaX = ball.direction[0],
         ballDeltaY = ball.direction[1],
         prevCoordinatesX,
         prevCoordinatesY,
         isMoving = false,
+
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5,
+
         padHeight = 10,
         padWidth = 85,
         padX = (canvasWidth - padWidth) / 2,
@@ -33,7 +37,7 @@ function createGame(canvasSelector) {
 
     function drawBall(ball, context) {
 
-        ballImage.src = "images/lemon-slice.png",
+        ballImage.src = ballImagePath,
             ballImage.onload = function () {
                 context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
             };
@@ -51,10 +55,10 @@ function createGame(canvasSelector) {
         ball.x += (ballDeltaX * ball.speed);
         ball.y += (ballDeltaY * ball.speed);
 
-        if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+        if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
             ballDeltaX *= -1;
         }
-        if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
+        if (ball.y < 0 || ball.y + ball.radius * 2 > canvas.height) {
             ballDeltaY *= -1;
         }
 
@@ -67,8 +71,8 @@ function createGame(canvasSelector) {
 
         var half = { x: (brick.width / 2), y: (brick.height / 2) },
             center = {
-                x: ball.x - (brick.x + half.x),
-                y: ball.y - (brick.y + half.y)
+                x: ball.x + ball.radius - (brick.x + half.x),
+                y: ball.y + ball.radius - (brick.y + half.y)
             };
         var side = {
             x: Math.abs(center.x) - half.x,
@@ -160,12 +164,14 @@ function createGame(canvasSelector) {
     }
 
     function generateBall() {
-        var x = canvas.width / 2 - 15,
+        var radius = 15,
+            x = canvas.width / 2 - radius,
             y = canvas.height - 50,
-            radius = 15,
             speed = 5,
             direction = [-1, -1],
+
             ball = createBall(x, y, radius, speed, direction);
+
         return ball;
     }
 
