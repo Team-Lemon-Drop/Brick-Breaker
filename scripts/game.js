@@ -35,7 +35,7 @@ function createGame(canvasSelector) {
 
         var image = new Image();
         image.src = "images/lemon-slice.png";
-        var pattern = context.createPattern(image,'repeat');
+        var pattern = context.createPattern(image, 'repeat');
 
         context.beginPath();
         context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
@@ -62,7 +62,49 @@ function createGame(canvasSelector) {
             ballDeltaY *= -1;
         }
 
+        bricks.some(brick => collisionWithBricks(ball, brick));
+
         window.requestAnimationFrame(moveBall);
+    }
+
+    function collisionWithBricks(ball, brick) {
+
+        var half = { x: (brick.width / 2), y: (brick.height / 2) },
+            center = {
+                x: ball.x - (brick.x + half.x),
+                y: ball.y - (brick.y + half.y)
+            };
+        var side = {
+            x: Math.abs(center.x) - half.x,
+            y: Math.abs(center.y) - half.y
+        };
+        if (side.x > ball.radius || side.y > ball.radius) { // no collision
+            return;
+        }
+
+        if ((side.x < 0 || side.y < 0) && brick.isDestroyed === false) {
+            if (Math.abs(side.x) < ball.radius && side.y < 0) { // hits the top or the bottom of the brick
+                ballDeltaX = center.x * side.x < 0 ? -1 : 1;
+
+                brick.isDestroyed = true;
+                context.clearRect(brick.x, brick.y, brick.width, brick.height);
+
+            } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
+                ballDeltaY = center.y * side.y < 0 ? -1 : 1;
+
+                brick.isDestroyed = true;
+                context.clearRect(brick.x, brick.y, brick.width, brick.height);
+            }
+            return;
+        }
+        if (brick.isDestroyed === false) {
+            ballDeltaX = center.x < 0 ? -1 : 1; // hits the corner of the brick
+            ballDeltaY = center.y < 0 ? -1 : 1; // bounces back in the same direction           
+
+            brick.isDestroyed = true;
+            context.clearRect(brick.x, brick.y, brick.width, brick.height);
+            return;
+        }
     }
 
     function drawPad() {
@@ -76,17 +118,17 @@ function createGame(canvasSelector) {
     function drawBricks() {
         generateBricks();
         var imgs = [];
-        for (var j = 0; j < bricks.length; j++) { 
+        for (var j = 0; j < bricks.length; j++) {
             var img = new Image();
             img.src = bricks[j].image;
-            imgs.push(img);             
-         }
+            imgs.push(img);
+        }
 
-         $.each(imgs, function(key, value ) {
-             value.onload = function(){
-                context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height );
+        $.each(imgs, function(key, value) {
+            value.onload = function() {
+                context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height);
             };
-        });       
+        });
     }
 
     function createBall(x, y, radius, speed, direction) {
@@ -113,8 +155,9 @@ function createGame(canvasSelector) {
             x: x,
             y: y,
             width: 50,
-            height: 20, 
-            image: bricksImagesPaths[randomIndex]
+            height: 20,
+            image: bricksImagesPaths[randomIndex],
+            isDestroyed: false
         };
 
         return brick;
