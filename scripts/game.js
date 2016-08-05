@@ -4,6 +4,12 @@ function createGame(canvasSelector) {
         canvasHeight = canvas.height,
         canvasWidth = canvas.width,
         ball = generateBall(),
+        ballImage = new Image(),
+        ballDeltaX = ball.direction[0],
+        ballDeltaY = ball.direction[1],
+        prevCoordinatesX,
+        prevCoordinatesY,
+        isMoving = false,
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
@@ -11,17 +17,12 @@ function createGame(canvasSelector) {
         padHeight = 10,
         padWidth = 85,
         padX = (canvasWidth - padWidth) / 2,
-        padY = (canvasHeight - padHeight) - 5,
-        ballDeltaX = ball.direction[0],
-        ballDeltaY = ball.direction[1],
-        prevCoordinatesX,
-        prevCoordinatesY,
-        isMoving = false;
+        padY = (canvasHeight - padHeight) - 5;
 
     function gameLoop() {
 
         drawBall(ball, context);
-        window.addEventListener('keyup', function(ev) {
+        window.addEventListener('keyup', function (ev) {
             if ((ev.keyCode == 32) && isMoving === false) {
                 moveBall();
                 isMoving = true;
@@ -30,22 +31,17 @@ function createGame(canvasSelector) {
         drawPad();
     }
 
-
     function drawBall(ball, context) {
 
-        var image = new Image();
-        image.src = "images/lemon-slice.png";
-        var pattern = context.createPattern(image, 'repeat');
-
-        context.beginPath();
-        context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
-        context.fillStyle = pattern;
-        context.fill();
+        ballImage.src = "images/lemon-slice.png",
+            ballImage.onload = function () {
+                context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
+            };
+        context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
     }
 
     function moveBall() {
-        context.clearRect(prevCoordinatesX - ball.radius, prevCoordinatesY - ball.radius,
-            2 * ball.radius, 2 * ball.radius);
+        context.clearRect(prevCoordinatesX, prevCoordinatesY, 2 * ball.radius, 2 * ball.radius);
 
         drawBall(ball, context);
 
@@ -124,8 +120,8 @@ function createGame(canvasSelector) {
             imgs.push(img);
         }
 
-        $.each(imgs, function(key, value) {
-            value.onload = function() {
+        $.each(imgs, function (key, value) {
+            value.onload = function () {
                 context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height);
             };
         });
@@ -164,11 +160,12 @@ function createGame(canvasSelector) {
     }
 
     function generateBall() {
-        var x = canvas.width / 2,
+        var x = canvas.width / 2 - 15,
             y = canvas.height - 50,
+            radius = 15,
             speed = 5,
             direction = [-1, -1],
-            ball = createBall(x, y, 12, speed, direction);
+            ball = createBall(x, y, radius, speed, direction);
         return ball;
     }
 
@@ -181,7 +178,7 @@ function createGame(canvasSelector) {
     }
 
     return {
-        "start": function() {
+        "start": function () {
             drawBricks();
             gameLoop();
         }
