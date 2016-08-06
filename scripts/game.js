@@ -33,15 +33,15 @@ function createGame(canvasSelector) {
             }
             if (ev.keyCode == 39) {
                 console.log(ev);
-                movePad();
                 onRightArrowPressed = true;
                 onLeftArrowPressed = false;
+                movePad();
 
             } else if (ev.keyCode == 37) {
                 console.log(ev);
-                movePad();
                 onRightArrowPressed = false;
                 onLeftArrowPressed = true;
+                movePad();
 
             }
         }, false);
@@ -138,13 +138,13 @@ function createGame(canvasSelector) {
         context.clearRect(pad.x - padOffset, pad.y,
             2 * pad.width + padOffset, pad.height);
         console.log(pad.width);
-        drawPad();
-
+        
         if (onRightArrowPressed && pad.x < canvas.width - (pad.width)) {
             if (pad.x -pad.width <canvas.width) {
                 pad.x += padMovingSpeed;
             } else {
                 pad.x = canvas.width;
+                drawPad();
                 return;
             }
         } else if (onLeftArrowPressed) {
@@ -152,14 +152,17 @@ function createGame(canvasSelector) {
                 pad.x -= padMovingSpeed;
             } else {
                 pad.x = 0;
+                drawPad();
                 return;
             }
         }
+
+        drawPad();
     };
 
     function padCollisionWithBall(pad, ball) {
-        if (ball.x - ball.radius > pad.x &&
-            ball.x - ball.radius < pad.x + pad.width &&
+        if (ball.x + ball.radius > pad.x &&
+            ball.x < pad.x + pad.width &&
             ball.y + ball.radius + (ballDeltaY * ball.speed)*3 >= pad.y - pad.height) {
             return true;
         }
@@ -257,6 +260,7 @@ function createGame(canvasSelector) {
     return {
         "start": function() {
             drawBricks();
+            drawPad();
             gameLoop();
         }
     };
