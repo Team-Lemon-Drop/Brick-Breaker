@@ -161,12 +161,10 @@ function createGame(canvasSelector) {
     }
 
     function padCollisionWithBall(pad, ball) {
-        if (ball.x + ball.radius > pad.x &&
-            ball.x < pad.x + pad.width &&
-            ball.y + ball.radius + (ballDeltaY * ball.speed)*3 >= pad.y - pad.height) {
-            return true;
-        }
-        return false;
+        return !!(ball.x + ball.radius > pad.x &&
+        ball.x < pad.x + pad.width &&
+        ball.y + ball.radius + (ballDeltaY * ball.speed) * 3 >= pad.y - pad.height);
+
     }
 
     function drawBricks() {
