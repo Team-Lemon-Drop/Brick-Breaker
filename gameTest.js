@@ -17,7 +17,7 @@ var ballRadius = 7,
     brickCols = 4,
     brickWidth = 75,
     brickHeight = 20,
-    bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
+    //bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
     brickPadding = 5,
     brickOffsetTop = 35,
     brickOffsetLeft = 35,
@@ -86,13 +86,13 @@ function collisionDetection() {
 }
 
 function drawBall() {
-    let image = new Image();
-    image.src = "images/lemon-slice.png";
-    let pattern = context.createPattern(image,'repeat');
+    //let image = new Image();
+    //image.src = "images/lemon-slice.png";
+    //let pattern = context.createPattern(image,'repeat');
     context.beginPath();
     context.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
     // yellow cvqt na topkata izglejda otvratitelno v momenta
-    context.fillStyle = pattern;
+    context.fillStyle = "green";
     context.fill();
     context.closePath();
 }

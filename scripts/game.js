@@ -49,7 +49,7 @@ function createGame(canvasSelector) {
 
     function drawBall(ball, context) {
 
-        ballImage.src = ballImagePath,
+        ballImage.src = ballImagePath;
             ballImage.onload = function() {
                 context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
             };
@@ -158,7 +158,7 @@ function createGame(canvasSelector) {
         }
 
         drawPad();
-    };
+    }
 
     function padCollisionWithBall(pad, ball) {
         if (ball.x + ball.radius > pad.x &&
@@ -221,10 +221,10 @@ function createGame(canvasSelector) {
             pad = createPad(x, y, width, height );
         return pad;
 
-    };
+    }
 
     function createBrick(x, y) {
-        var randomIndex = (Math.random() * (bricksImagesPaths.length - 0) + 0) | 0;
+        var randomIndex = Math.random() * bricksImagesPaths.length | 0;
         var brick = {
             x: x,
             y: y,
