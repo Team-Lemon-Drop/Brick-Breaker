@@ -1,3 +1,41 @@
-canvas{
-   border: 1px solid black;   
+#menu{
+    border: 1px solid black; 
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width:600px;
+    height:400px;
+}
+
+div#game-container{
+    display: none;
+    border: 1px solid black; 
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width:600px;
+    height:400px;
+}
+
+#heading{
+    height: 150px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+div > nav{
+    text-align: center;
+}
+
+ul#navigation{
+    list-style-type: none;
+}
+
+ul#navigation li{
+    padding: 10px;
 }

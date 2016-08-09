@@ -7,19 +7,34 @@
     <link rel="stylesheet" href="css/game.css">
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/game.js"></script>
+    <script src="scripts/states.js"></script>
 </head>
-<body>
-    <h1>Brick Breaker by Lemon Drop</h1>
-    <div id="game-container">
-        <canvas id="game-canvas" class="canvas" width="600" height="400"> 
-                 
-        </canvas> 
-        
+<body>    
+    <div id="heading">
+        <h1>Brick Breaker by Lemon Drop</h1>
+         <svg id="svg-container"></svg>         
+    </div>
+    <div id="menu"> 
+       <nav>
+            <ul id="navigation">
+                <li>
+                   <button id="play-button">Play</button>
+                </li>
+                <li>
+                    <button id="how-button">How to Play</button>
+                </li>
+                <li>
+                    <button id="credits-button">Credits</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="game-container">       
+        <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>        
     </div>   
     <script>
         window.onload = function() {
-            var game = createGame("#game-canvas");
-            game.start();
+            getStates();            
         };
     </script>
 </body>
