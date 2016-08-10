@@ -12,7 +12,7 @@ function createGame(canvasSelector) {
         isMoving = false,
 
         pad = generatePad(),
-        padMovingSpeed = 25,
+        padMovingSpeed = 5,
         padOffset = 30,
         onLeftArrowPressed = false,
         onRightArrowPressed = false,
@@ -24,36 +24,57 @@ function createGame(canvasSelector) {
         
         lives = 3;
 
-         document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
+    document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
+
+    
 
     function gameLoop() {
-
+        printLives();
         drawBall(ball, context);
         //changed to keydown
         window.addEventListener('keydown', function (ev) {
-            if ((ev.keyCode == 32) && isMoving === false) {
+            if ((ev.keyCode == 32)  && isMoving === false) {
                 moveBall();
                 isMoving = true;
             }
             if (ev.keyCode == 39) {
-                console.log(ev);
+                //console.log(ev);
                 onRightArrowPressed = true;
                 onLeftArrowPressed = false;
                 movePad();
 
             } else if (ev.keyCode == 37) {
-                console.log(ev);
+                //console.log(ev);
                 onRightArrowPressed = false;
                 onLeftArrowPressed = true;
                 movePad();
 
             }
         }, false);
+
+        window.addEventListener('keyup', function (ev) {
+            if (ev.keyCode == 39 || ev.keyCode == 37) {
+                onRightArrowPressed = false;
+                onLeftArrowPressed = false;
+                movePad();
+                window.cancelAnimationFrame(movePad);
+            } 
+        }, false);
+
+        window.addEventListener('dblclick', function (ev) {
+            if (isMoving === false) {
+                console.log(ev);
+                moveBall();
+                isMoving = true;
+            }
+        }, false);
+
         window.addEventListener('mousemove', function (ev) {
             pad.x = ev.clientX - canvas.offsetLeft;
             padCollisionWithWalls();
             movePad();
         }, false);
+
     }
 
 
@@ -68,7 +89,7 @@ function createGame(canvasSelector) {
 
     function moveBall() {
         context.clearRect(prevCoordinatesX, prevCoordinatesY, 2 * ball.radius, 2 * ball.radius);
-
+        
         drawBall(ball, context);
 
         prevCoordinatesX = ball.x;
@@ -77,8 +98,10 @@ function createGame(canvasSelector) {
         ball.x += (ballDeltaX * ball.speed);
         ball.y += (ballDeltaY * ball.speed);
 
+
         if(ball.y + ball.radius * 2 > canvas.height){
             endLive();
+            window.cancelAnimationFrame(moveBall);
             //return;
         }
 
@@ -90,7 +113,7 @@ function createGame(canvasSelector) {
         } else if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
             ballDeltaY *= -1;
         }
-
+        
         bricks.some(brick => collisionWithBricks(ball, brick));
 
         window.requestAnimationFrame(moveBall);
@@ -280,28 +303,61 @@ function createGame(canvasSelector) {
         }
     }
 
-        function endLive() {
+    function endLive() {
         lives -= 1;
-        //center
-        //window.cancelAnimationFrame(moveBall);
         ball.x = canvas.width / 2 - ball.radius;
         ball.y = canvas.height - 50;
-
+        isMoving = false;
         //pad.x = canvas.width / 2 - pad.width/2;
         /*
         ball.direction = [1, -1];
         ball.ballDeltaX = 1;
         ball.ballDeltaY = 1;
         */
+        isGameSuccess();
         console.log(lives);
         if(lives===0)
         {
+            
             console.log("End Game")
-
-            //document.location.reload();
-            //endgame
         }
     }
+
+    function printLives() {
+        context.font = "15px Arial";
+        context.clearRect(500,0,250,20);
+        context.fillText("Lives :"+lives, 530, 20);
+    }
+
+    function drawAll(params) {
+        movePad();
+        printLives();
+        //moveBall();
+    
+        window.requestAnimationFrame(drawAll);
+    }
+    drawAll();
+
+    function isGameSuccess() {        
+        var allBricksDestroyed = false;
+        
+        for (var i = 0, len = bricks.length; i < len; i+=1) {
+            if (bricks[i].isDestroyed===false || bricks.length != 40) {
+                console.log(bricks[i].isDestroyed);
+                return;
+            }
+            allBricksDestroyed = true;
+            console.log("Success!"); 
+        }
+
+        if (allBricksDestroyed || lives<=0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    
 
     return {
         "start": function () {
