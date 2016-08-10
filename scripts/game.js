@@ -20,7 +20,9 @@ function createGame(canvasSelector) {
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
-        numberOfBricksInCol = 5;
+        numberOfBricksInCol = 5,
+        
+        lives = 3;
 
          document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
 
@@ -74,6 +76,11 @@ function createGame(canvasSelector) {
 
         ball.x += (ballDeltaX * ball.speed);
         ball.y += (ballDeltaY * ball.speed);
+
+        if(ball.y + ball.radius * 2 > canvas.height){
+            endLive();
+            //return;
+        }
 
         if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
             ballDeltaX *= -1;
@@ -147,7 +154,6 @@ function createGame(canvasSelector) {
     function movePad() {
         context.clearRect(0, pad.y, pad.x, pad.height);
         context.clearRect(pad.x + pad.width, pad.y, canvas.width, pad.height);
-        console.log(pad.width);
 
         if (onRightArrowPressed && pad.x < canvas.width - (pad.width)) {
             if (pad.x - pad.width < canvas.width) {
@@ -181,7 +187,7 @@ function createGame(canvasSelector) {
     }
 
     function padCollisionWithBall(pad, ball) {
-        return !!(ball.x + ball.radius > pad.x &&
+        return !!(ball.x + 2*ball.radius > pad.x &&
             ball.x < pad.x + pad.width &&
             ball.y + ball.radius + (ballDeltaY * ball.speed) * 3 >= pad.y - pad.height);
     }
@@ -271,6 +277,29 @@ function createGame(canvasSelector) {
             for (var j = 1; j <= numberOfBricksInCol; j += 1) {
                 bricks.push(createBrick(i * 60, j * 35));
             }
+        }
+    }
+
+        function endLive() {
+        lives -= 1;
+        //center
+        //window.cancelAnimationFrame(moveBall);
+        ball.x = canvas.width / 2 - ball.radius;
+        ball.y = canvas.height - 50;
+
+        //pad.x = canvas.width / 2 - pad.width/2;
+        /*
+        ball.direction = [1, -1];
+        ball.ballDeltaX = 1;
+        ball.ballDeltaY = 1;
+        */
+        console.log(lives);
+        if(lives===0)
+        {
+            console.log("End Game")
+
+            //document.location.reload();
+            //endgame
         }
     }
 
