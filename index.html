@@ -9,29 +9,31 @@
     <script src="scripts/game.js"></script>
     <script src="scripts/states.js"></script>
 </head>
-<body>    
+
+<body>
     <div id="heading">
         <h1>Brick Breaker by Lemon Drop</h1>
-         <svg id="svg-container"></svg>         
+        <svg id="svg-container"></svg>
     </div>
-    <div id="menu"> 
-       <nav>
-            <ul id="navigation">
-                <li>
-                   <button id="play-button">Play</button>
-                </li>
-                <li>
-                    <button id="how-button">How to Play</button>
-                </li>
-                <li>
-                    <button id="credits-button">Credits</button>
-                </li>
-            </ul>
-        </nav>
+
+    <div id="menu">
+        <section class="carousel">
+            <div id="navigation">
+                <figure id="play-button"> PLAY GAME </figure>
+                <figure id="how-button" id="credits-button"> HOW TO </figure>
+                <figure>3</figure>
+                <figure>4</figure>
+                <figure>5</figure>
+                <figure>6</figure>
+                <figure>7</figure>
+                <figure>8</figure>
+                <figure id="credits-button"> CREDITS </figure>
+            </div>
+        </section>
     </div>
-    <div id="game-container">       
-        <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>        
-    </div>   
+    <div id="game-container">
+        <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>
+    </div>
     <script>
         window.onload = function() {
             getStates();            
