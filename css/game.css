@@ -1,12 +1,11 @@
 #menu{
-    border: 1px solid black; 
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
     width:600px;
     height:400px;
-    background-color: cadetblue;
+    background-color:whitesmoke;
 } 
 
 
@@ -30,15 +29,18 @@ div#game-container{
     text-align: center;
 }
 
-.carousel {
+.carousel {   
+    height: 270px;
+    width:550px;
   position: relative;
+  top:42px;
   perspective: 1000px;
 }
 
 #navigation {
-    top:35px;
-    left:35px;
-  width: 200px;
+    top:70px;
+    left:45px;
+  width: 250px;
   height: 100px;
   position: absolute;
   transform-style: preserve-3d;
@@ -46,39 +48,38 @@ div#game-container{
 
 #navigation figure {
   position: absolute;
-  width: 160px;
-  height: 100px;
+  width:130px;
+  height: 120px;
   left: 150px;
-  top: 10px;
-  border: 1px solid lightgrey;
-    background-color: lightyellow;
+
+  border:1px;
+  border-color: whitesmoke;
+  border-style: outset;
+    background-color: lightblue;
+        box-shadow: 10px 10px 5px silver;
+
     color:cadetblue;
+    text-align: center;
 }
 
-figure:hover{
+strong{
+    line-height: 88px;
+      font-size: large; 
+    font-family: "Times New Roman", Georgia, Serif; 
+}
+
+#navigation figure:hover{
     background-color: lightgoldenrodyellow;
-    color:dodgerblue;
+    color:indianred;
+    height: 120px;
+    top:-6px;
 }
 
-#navigation figure:nth-child(1) { transform: rotateY(   0deg ); }
-#navigation figure:nth-child(2) { transform: rotateY(  40deg ); }
-#navigation figure:nth-child(3) { transform: rotateY(  80deg ); }
-#navigation figure:nth-child(4) { transform: rotateY( 120deg ); }
-#navigation figure:nth-child(5) { transform: rotateY( 160deg ); }
-#navigation figure:nth-child(6) { transform: rotateY( 200deg ); }
-#navigation figure:nth-child(7) { transform: rotateY( 240deg ); }
-#navigation figure:nth-child(8) { transform: rotateY( 280deg ); }
-#navigation figure:nth-child(9) { transform: rotateY( 320deg ); }
+#navigation figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 246px ); }
+#navigation figure:nth-child(2) { transform: rotateY(  33deg ) translateZ( 246px ); }
+#navigation figure:nth-child(3) { transform: rotateY(  327deg ) translateZ( 246px ); }
 
-#navigation figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 288px ); }
-#navigation figure:nth-child(2) { transform: rotateY(  40deg ) translateZ( 288px ); }
-#navigation figure:nth-child(3) { transform: rotateY(  80deg ) translateZ( 288px ); }
-#navigation figure:nth-child(4) { transform: rotateY( 120deg ) translateZ( 288px ); }
-#navigation figure:nth-child(5) { transform: rotateY( 160deg ) translateZ( 288px ); }
-#navigation figure:nth-child(6) { transform: rotateY( 200deg ) translateZ( 288px ); }
-#navigation figure:nth-child(7) { transform: rotateY( 240deg ) translateZ( 288px ); }
-#navigation figure:nth-child(8) { transform: rotateY( 280deg ) translateZ( 288px ); }
-#navigation figure:nth-child(9) { transform: rotateY( 320deg ) translateZ( 288px ); }
+
 
 
 
