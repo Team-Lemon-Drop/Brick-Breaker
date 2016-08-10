@@ -22,11 +22,13 @@ function createGame(canvasSelector) {
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5;
 
-           function gameLoop() {
+         document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
+
+    function gameLoop() {
 
         drawBall(ball, context);
         //changed to keydown
-        window.addEventListener('keydown', function(ev) {
+        window.addEventListener('keydown', function (ev) {
             if ((ev.keyCode == 32) && isMoving === false) {
                 moveBall();
                 isMoving = true;
@@ -45,14 +47,20 @@ function createGame(canvasSelector) {
 
             }
         }, false);
+        window.addEventListener('mousemove', function (ev) {
+            pad.x = ev.clientX - canvas.offsetLeft;
+            padCollisionWithWalls();
+            movePad();
+        }, false);
     }
+
 
     function drawBall(ball, context) {
 
         ballImage.src = ballImagePath;
-            ballImage.onload = function() {
-                context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
-            };
+        ballImage.onload = function () {
+            context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
+        };
         context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
     }
 
@@ -72,7 +80,7 @@ function createGame(canvasSelector) {
         }
         if (ball.y < 0 || ball.y + ball.radius * 2 > canvas.height) {
             ballDeltaY *= -1;
-        }else if (padCollisionWithBall(pad, ball)) { //need some help here, pls
+        } else if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
             ballDeltaY *= -1;
         }
 
@@ -84,9 +92,9 @@ function createGame(canvasSelector) {
     function collisionWithBricks(ball, brick) {
 
         var half = {
-                x: (brick.width / 2),
-                y: (brick.height / 2)
-            },
+            x: (brick.width / 2),
+            y: (brick.height / 2)
+        },
             center = {
                 x: ball.x + ball.radius - (brick.x + half.x),
                 y: ball.y + ball.radius - (brick.y + half.y)
@@ -125,22 +133,24 @@ function createGame(canvasSelector) {
     }
 
     function drawPad() {
-            context.beginPath();
-        context.rect(pad.x, pad.y, pad.width, pad.height);
-        context.fillStyle = "black";
-        context.fill();
-        context.closePath();
- 
-    }
-
-    
-    function movePad() {
         context.clearRect(pad.x - padOffset, pad.y,
             2 * pad.width + padOffset, pad.height);
+        context.beginPath();
+        context.fillStyle = "black";
+        context.rect(pad.x, pad.y, pad.width, pad.height);
+        context.fill();
+        context.closePath();
+
+    }
+
+
+    function movePad() {
+        context.clearRect(0, pad.y, pad.x, pad.height);
+        context.clearRect(pad.x + pad.width, pad.y, canvas.width, pad.height);
         console.log(pad.width);
-        
+
         if (onRightArrowPressed && pad.x < canvas.width - (pad.width)) {
-            if (pad.x -pad.width <canvas.width) {
+            if (pad.x - pad.width < canvas.width) {
                 pad.x += padMovingSpeed;
             } else {
                 pad.x = canvas.width;
@@ -160,11 +170,20 @@ function createGame(canvasSelector) {
         drawPad();
     }
 
+    
+    function padCollisionWithWalls() {
+        if (pad.x < 0) {
+            pad.x = 0;
+        }
+        if (pad.x + pad.width > canvas.width) {
+            pad.x = canvas.width - pad.width;
+        }
+    }
+
     function padCollisionWithBall(pad, ball) {
         return !!(ball.x + ball.radius > pad.x &&
-        ball.x < pad.x + pad.width &&
-        ball.y + ball.radius + (ballDeltaY * ball.speed) * 3 >= pad.y - pad.height);
-
+            ball.x < pad.x + pad.width &&
+            ball.y + ball.radius + (ballDeltaY * ball.speed) * 3 >= pad.y - pad.height);
     }
 
     function drawBricks() {
@@ -176,8 +195,8 @@ function createGame(canvasSelector) {
             imgs.push(img);
         }
 
-        $.each(imgs, function(key, value) {
-            value.onload = function() {
+        $.each(imgs, function (key, value) {
+            value.onload = function () {
                 context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height);
             };
         });
@@ -201,7 +220,7 @@ function createGame(canvasSelector) {
         return ball;
     }
 
-        function createPad(x, y, width, height ) {
+    function createPad(x, y, width, height) {
         var pad = {
             x: x,
             y: y,
@@ -216,7 +235,7 @@ function createGame(canvasSelector) {
             y = (canvas.height - 10) - 5,
             width = 85,
             height = 10,
-            pad = createPad(x, y, width, height );
+            pad = createPad(x, y, width, height);
         return pad;
 
     }
@@ -256,7 +275,7 @@ function createGame(canvasSelector) {
     }
 
     return {
-        "start": function() {
+        "start": function () {
             drawBricks();
             drawPad();
             gameLoop();
