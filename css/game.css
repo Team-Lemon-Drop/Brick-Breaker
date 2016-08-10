@@ -1,17 +1,6 @@
-#menu{
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width:600px;
-    height:400px;
-    background-color:whitesmoke;
-} 
-
-
-div#game-container{
-    display: none;
-    border: 1px solid black; 
+.game-div{
+    background-color: whitesmoke;
+    border: 1px solid black;   
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -20,30 +9,38 @@ div#game-container{
     height:400px;
 }
 
+#menu{
+    background-color:whitesmoke;
+} 
+
+div#game-container{
+    display: none;
+}
+
 #heading{
-    height: 150px;
+    height: 100px;    
+    background-color: white;
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
 }
 
 .carousel {   
     height: 270px;
     width:550px;
-  position: relative;
-  top:42px;
-  perspective: 1000px;
+    position: relative;
+    top:42px;
+    perspective: 1000px;
 }
 
 #navigation {
     top:70px;
     left:45px;
-  width: 250px;
-  height: 100px;
-  position: absolute;
-  transform-style: preserve-3d;
+    width: 250px;
+    height: 100px;
+    position: absolute;
+    transform-style: preserve-3d;
 }
 
 #navigation figure {

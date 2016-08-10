@@ -1,7 +1,9 @@
 var getStates = function () {
     var playButton = document.getElementById("play-button"),
         howToButton = document.getElementById("how-button"),
-        creditsButton = document.getElementById("credits-button");
+        creditsButton = document.getElementById("credits-button"),
+        playAgainButton = document.getElementById("play-again"),
+        $paths = $(".path"); 
 
     var startGame = function () {
         var gameContainer = document.getElementById("game-container"),
@@ -33,8 +35,27 @@ var getStates = function () {
         menu.appendChild(heading);
     };
 
+     var overEllipse = function (target) {        
+        target.setAttribute('fill', 'lightgoldenrodyellow'); 
+    };
+
+    var outOfEllipse = function (target) {
+        target.setAttribute('fill', 'lightblue');
+    };
+
+    
+
+    $paths.mouseover(function(event){
+        overEllipse(event.target);
+    });
+
+    $paths.mouseout(function(event){
+        outOfEllipse(event.target);
+    });
+
     playButton.addEventListener('click', startGame, false);
     howToButton.addEventListener('click', showRules, false);
     creditsButton.addEventListener('click', credits, false);
+    playAgainButton.addEventListener('click', startGame, false);
 
 };
