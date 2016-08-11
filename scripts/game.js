@@ -155,29 +155,29 @@ function createGame(canvasSelector) {
         if ((side.x < 0 || side.y < 0) && brick.isDestroyed === false) {
             if (Math.abs(side.x) < ball.radius && side.y < 0) { // hits the top or the bottom of the brick
                 ballDeltaX = center.x * side.x < 0 ? -1 : 1;
-
+                bonusX = brick.x+brick.width/2;
+                bonusY = brick.y+brick.height;
                 brick.isDestroyed = true;
-
+                moveBonus();
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
-                if(randomBonus < 0.1){
-                    bonusX = brick.x+brick.width/2;
-                    bonusY = brick.y+brick.height;
+                if(randomBonus < 0.9){
+
                     drawBonus(bonusX,bonusY);
-                    moveBonus();
+
                 }
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
-
+                bonusX = brick.x+brick.width/2;
+                bonusY = brick.y+brick.height;
                 brick.isDestroyed = true;
-
+                moveBonus();
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
-                if(randomBonus < 0.1){
-                    bonusX = brick.x+brick.width/2;
-                    bonusY = brick.y+brick.height;
+                if(randomBonus < 0.9){
+
                     drawBonus(bonusX,bonusY);
-                    moveBonus();
+
                 }
             }
 
