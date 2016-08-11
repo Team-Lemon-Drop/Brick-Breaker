@@ -7,17 +7,17 @@ var getStates = function () {
         endScreen = document.getElementById("end-screen"),
         creditsDiv = document.getElementById("credits"),
         $paths = $(".path"),
-        $texts = $(".text"),
         menu = document.getElementById("menu"),
         backButton = document.createElement("button"),    
         contributorsText = document.createElement('h2'),     
         rulesDiv = document.getElementById('rules'),
-        section = document.getElementById("game-section"),
-        gameContainer = document.getElementById("game-container");
+        section = document.getElementById("game-section");
 
-        backButton.className = "go-back-btn";
+         backButton.className = "go-back-btn";
 
-    var startGame = function () {            
+    var startGame = function () {
+        var gameContainer = document.getElementById("game-container");
+            
             menu.style.display = 'none';
             gameContainer.style.display = 'block';
             endScreen.style.display = 'none';
@@ -26,12 +26,16 @@ var getStates = function () {
             game.start();
     };
 
+    var showCredits = function(){
+        var credit = document.getElementById('credits-div');
+        credit.style.display = '';
+    };
+
     var showRules = function () {    
-        var heading = document.createElement("h2"),
+      var heading = document.createElement("h2"),
             rule = document.createElement("p"),
             warning = document.createElement("p");
-
-        backButton.innerText = "Go back";
+      
         rule.className='rules';
         warning.className='warning';
         heading.className = 'heading';
@@ -55,43 +59,15 @@ var getStates = function () {
         section.appendChild(rulesDiv);
     };
 
-     function createCredits(){ 
-        var members = ["DimaAtanasova", "dimpechev", "maryakach", "nikola.stefanov", "pepchon", "pspassova", "teod_st"],
-            teamUl = document.createElement('ul'),
-            li = document.createElement("li");
-
-        backButton.innerText = "Go back";
-        creditsDiv.style.display = 'block';
-        contributorsText.innerText = "Contributors:";
-        contributorsText.id = "contributors";
-        contributorsText.className = "heading";
-        menu.style.display = "none";
-        creditsDiv.className = "game-div";    
-        teamUl.className = 'team-members';
-
-        for(var i = 0, len = members.length; i < len; i+= 1){
-            var member = li.cloneNode(true);
-
-            member.innerText = members[i];
-            member.className = "member";
-            teamUl.appendChild(member);
-        }
-
-        creditsDiv.appendChild(contributorsText);
-        creditsDiv.appendChild(teamUl);
-        creditsDiv.appendChild(backButton); 
-
-        section.appendChild(creditsDiv);        
-    }
-
      var overEllipse = function (target) {        
         target.setAttribute('fill', 'lightgoldenrodyellow'); 
-        target.style.cursor = "pointer";             
+        target.style.cursor = "pointer";
     };
 
     var outOfEllipse = function (target) {
         target.setAttribute('fill', 'lightblue');
     };
+
     
     var goToMainMenu = function(){
         creditsDiv.style.display = 'none';
@@ -110,9 +86,33 @@ var getStates = function () {
         outOfEllipse(event.target);
     });
 
-    $texts.mouseover(function(event){        
-        event.target.style.cursor = "pointer";  
-    });           
+     function createCredits(){ 
+        var members = ["DimaAtanasova", "dimpechev", "maryakach", "nikola.stefanov", "pepchon", "pspassova", "teod_st"],
+             teamUl = document.createElement('ul'),
+             li = document.createElement("li");
+
+        creditsDiv.style.display = 'block';
+        contributorsText.innerText = "Contributors:";
+        contributorsText.id = "contributors";
+        menu.style.display = "none";
+        creditsDiv.className = "game-div";    
+        teamUl.className = 'team-members';
+
+        for(var i = 0, len = members.length; i < len; i+= 1){
+            var member = li.cloneNode(true);
+
+            member.innerText = members[i];
+            member.className = "member";
+            teamUl.appendChild(member);
+        }
+
+        creditsDiv.appendChild(contributorsText);
+        creditsDiv.appendChild(teamUl);   
+        backButton.innerText = "Go back";  
+        creditsDiv.appendChild(backButton); 
+
+        section.appendChild(creditsDiv);        
+    }
 
     playButton.addEventListener('click', startGame, false);
     playAgainButton.addEventListener('click', startGame, false);   
@@ -122,4 +122,5 @@ var getStates = function () {
 
     backButton.addEventListener('click', goToMainMenu, false);
     returnToMenu.addEventListener('click', goToMainMenu, false);
+
 };

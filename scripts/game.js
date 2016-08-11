@@ -81,6 +81,7 @@ function createGame(canvasSelector) {
 
 
     function drawBall(ball, context) {
+
         ballImage.src = ballImagePath;
         ballImage.onload = function() {
             context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
@@ -116,18 +117,13 @@ function createGame(canvasSelector) {
             return;
         }
 
-        //bricks.some(brick => collisionWithBricks(ball, brick)); -> Doesn't work on IE
-
-        bricks.some(checkCollission);
-
-        function checkCollission(brick){
-            return collisionWithBricks(ball, brick);
-        }
+        bricks.some(brick => collisionWithBricks(ball, brick));
 
         window.requestAnimationFrame(moveBall);
     }
 
     function collisionWithBricks(ball, brick) {
+
         var half = {
                 x: (brick.width / 2),
                 y: (brick.height / 2)
@@ -181,6 +177,7 @@ function createGame(canvasSelector) {
         context.rect(pad.x, pad.y, pad.width, pad.height);
         context.fill();
         context.closePath();
+
     }
 
 
@@ -351,7 +348,6 @@ function createGame(canvasSelector) {
 
         window.requestAnimationFrame(drawAll);
     }
-    
     drawAll();
 
     function isGameSuccess() {
