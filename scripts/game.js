@@ -103,6 +103,9 @@ function createGame(canvasSelector) {
         if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
             ballDeltaX *= -1;
         }
+        if (ball.y < 0){
+            ballDeltaY *= -1;
+        }
         if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
             ballDeltaY *= -1;
         }
