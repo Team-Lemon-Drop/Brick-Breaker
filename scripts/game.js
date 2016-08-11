@@ -419,17 +419,22 @@ function createGame(canvasSelector) {
 
         window.requestAnimationFrame(moveBonus);
         //context.clearRect(bonusX-bonusRadius, bonusY-bonusRadius, 2*bonusRadius, 2*bonusRadius);
-        if (padCollisionWithBonus) {
+        if (padCollisionWithBonus()) {
             //bonus whatever
+            console.log("bonus");
             cancelAnimationFrame(moveBonus)
             //context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
         } 
     }
 
-    function padCollisionWithBonus(pad, ball) {
-        return !!(bonusX + bonusRadius > pad.x &&
-            bonusX - bonusRadius < pad.x + pad.width &&
-            bonusY + bonusRadius >= pad.y - pad.height);
+    function padCollisionWithBonus() {
+        if (bonusX + bonusRadius > pad.x &&
+        bonusX - bonusRadius < pad.x + pad.width &&
+        bonusY + bonusRadius >= pad.y - pad.height) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
