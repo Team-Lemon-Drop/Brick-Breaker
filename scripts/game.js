@@ -335,9 +335,9 @@ function createGame(canvasSelector) {
     }
 
     function printLives() {
-        context.font = "15px Arial";
+        context.font = "20px Times New Roman";
         context.clearRect(500, 0, 250, 20);
-        context.fillText("Lives :" + lives, 530, 20);
+        context.fillText("Lives: " + lives, 530, 20);
     }
 
     function drawAll(params) {

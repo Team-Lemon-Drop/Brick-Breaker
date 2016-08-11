@@ -3,15 +3,16 @@ body{
 }
 
 .game-div{    
-    background-color: whitesmoke;
-    border: 3px solid yellowgreen;  
-    border-radius: 10px; 
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
     width:600px;
     height:400px;
+
+    background-color: whitesmoke;
+    border: 3px solid yellowgreen;  
+    border-radius: 10px;   
 }
 
 #menu{
@@ -49,16 +50,16 @@ img{
 }
 
 #navigation figure {
-  position: absolute;
-  width:130px;
-  height: 120px;
-  left: 150px;
+    position: absolute;
+    width:130px;
+    height: 120px;
+    left: 150px;
 
   border:1px;
   border-color: whitesmoke;
   border-style: outset;
-    background-color: lightblue;
-        box-shadow: 10px 10px 5px silver;
+  background-color: lightblue;
+  box-shadow: 10px 10px 5px silver;
 
     color:cadetblue;
     text-align: center;
@@ -71,10 +72,10 @@ strong{
 }
 
 #navigation figure:hover{
-    background-color: lightgoldenrodyellow;
-    color:indianred;
     height: 120px;
     top:-6px;
+    background-color: lightgoldenrodyellow;
+    color:indianred;
 }
 
 #navigation figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 246px ); }
@@ -85,7 +86,7 @@ strong{
     line-height: 2;
     text-align: center;
     font-size: xx-large;
-    font-family: "'Times New Roman', Times, serif";
+    font-family: 'Times New Roman', Times, serif;
     color: cadetblue;
     text-shadow:2px 2px 5px white;
 }
@@ -93,7 +94,7 @@ strong{
 .rules{
     display: block;
     margin-left: 40px;
-    font-family: "'Times New Roman', Times, serif";
+    font-family: 'Times New Roman', Times, serif;
     font-size: 24px;
     color: darkgoldenrod;
 }
@@ -113,32 +114,46 @@ strong{
     list-style-type: none;
     text-align: center;
     padding: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    color: brown;
+    text-shadow: 2px 1px 6px silver;
 }
 
 #contributors{
+    line-height: 2;
     text-align: center;
-    padding: 5px;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
     color: cadetblue;
-    text-decoration: underline;
+    text-shadow:2px 2px 5px white;
+    margin: 5px;
 }
 
 .team-members li{
-    padding: 5px;
-    font-size: 22px;
+    padding: 4px;
+    font-size: 24px;
 }
 
 .go-back-btn{
     margin: auto;
     display: block;
-    border-radius: 5px;
-    background-color: cadetblue;
-    font-size: 16px;
+    width:100px;
+    height: 30px;
+
+    border-radius: 7px;
+    background-color: lightgrey;
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 20px;  
+    color: cadetblue;
 }
 
 footer{
     text-align: center;
     font-weight: bold;
-    color: indianred;
+    font-size: 20px;
+    color: brown;
+    text-shadow: 1px 1px 1px white;
 }
 
 
