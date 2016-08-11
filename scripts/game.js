@@ -422,15 +422,18 @@ function createGame(canvasSelector) {
         if (padCollisionWithBonus()) {
             //bonus whatever
             console.log("bonus");
-            cancelAnimationFrame(moveBonus)
-            //context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
+            context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
+            return;
         } 
     }
 
     function padCollisionWithBonus() {
         if (bonusX + bonusRadius > pad.x &&
         bonusX - bonusRadius < pad.x + pad.width &&
-        bonusY + bonusRadius >= pad.y - pad.height) {
+        bonusY + bonusRadius >= pad.y - pad.height && 
+        bonusY + bonusRadius <= canvas.height) {
+            bonusY=canvas.height+2*bonusRadius;
+            window.cancelAnimationFrame(moveBonus);
             return true;
         }else{
             return false;
