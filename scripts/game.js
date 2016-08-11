@@ -17,7 +17,7 @@ function createGame(canvasSelector) {
         onLeftArrowPressed = false,
         onRightArrowPressed = false,
 
-        bonusRarius = 20,
+        bonusRadius = 10,
         score = 0,
         randomBonus = Math.random(),
 
@@ -155,9 +155,12 @@ function createGame(canvasSelector) {
             if (Math.abs(side.x) < ball.radius && side.y < 0) { // hits the top or the bottom of the brick
                 ballDeltaX = center.x * side.x < 0 ? -1 : 1;
 
-                brick.isDestroyed = true,
-                    bonusX = brick.x,
-                    bonusY = brick.y;
+                brick.isDestroyed = true;
+                bonusX = brick.x+brick.width/2;
+                bonusY = brick.y+brick.height;
+
+                moveBonus();
+
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
                 if(randomBonus < 0.1){
@@ -166,9 +169,12 @@ function createGame(canvasSelector) {
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
 
-                brick.isDestroyed = true,
-                    bonusX = brick.x,
-                    bonusY = brick.y;
+                brick.isDestroyed = true;
+                bonusX = brick.x+brick.width/2;
+                bonusY = brick.y+brick.height;
+
+                moveBonus();
+
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
                 if(randomBonus < 0.1){
@@ -363,6 +369,7 @@ function createGame(canvasSelector) {
     function drawAll(params) {
         movePad();
         printLives();
+        //moveBonus();
         //moveBall();
 
         window.requestAnimationFrame(drawAll);
@@ -399,11 +406,33 @@ function createGame(canvasSelector) {
         //image.src = "bonus img";
         //let pattern = context.createPattern(image,'repeat');
         context.beginPath();
-        context.arc(bonusX, bonusY, bonusRarius, 0, Math.PI*2);
+        context.arc(bonusX, bonusY, bonusRadius, 0, Math.PI*2);
         context.fillStyle = "green";
         context.fill();
         context.closePath();
     }
+
+    function moveBonus() {
+        context.clearRect(bonusX-bonusRadius, bonusY-2*bonusRadius, 2*bonusRadius, 2*bonusRadius);
+        bonusY += 0.4;
+        drawBonus(bonusX,bonusY);
+
+        window.requestAnimationFrame(moveBonus);
+        //context.clearRect(bonusX-bonusRadius, bonusY-bonusRadius, 2*bonusRadius, 2*bonusRadius);
+        if (padCollisionWithBonus) {
+            //bonus whatever
+            cancelAnimationFrame(moveBonus)
+            //context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
+        } 
+    }
+
+    function padCollisionWithBonus(pad, ball) {
+        return !!(bonusX + bonusRadius > pad.x &&
+            bonusX - bonusRadius < pad.x + pad.width &&
+            bonusY + bonusRadius >= pad.y - pad.height);
+    }
+
+
     return {
         "start": function() {
             drawBricks();
