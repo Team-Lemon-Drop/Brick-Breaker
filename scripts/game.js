@@ -1,7 +1,7 @@
 function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
-        
+
         ball = generateBall(),
         ballImage = new Image(),
         ballImagePath = "images/lemon-slice.png",
@@ -21,22 +21,22 @@ function createGame(canvasSelector) {
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5,
-        
+
         lives = 3,
         exitMessage = "",
         finalScreen = document.getElementById('end-screen'),
         gameScreen = document.getElementById('game-container');
 
-    document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
-    
+    document.getElementById('game-canvas').style.cursor = 'none'; //hides the cursor
+
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     function gameLoop() {
         printLives();
         drawBall(ball, context);
-        
-        window.addEventListener('keydown', function (ev) {
-            if ((ev.keyCode == 32)  && isMoving === false) {
+
+        window.addEventListener('keydown', function(ev) {
+            if ((ev.keyCode == 32) && isMoving === false) {
                 moveBall();
                 isMoving = true;
             }
@@ -55,23 +55,23 @@ function createGame(canvasSelector) {
             }
         }, false);
 
-        window.addEventListener('keyup', function (ev) {
+        window.addEventListener('keyup', function(ev) {
             if (ev.keyCode == 39 || ev.keyCode == 37) {
                 onRightArrowPressed = false;
                 onLeftArrowPressed = false;
                 movePad();
                 window.cancelAnimationFrame(movePad);
-            } 
+            }
         }, false);
 
-        window.addEventListener('dblclick', function () {
+        window.addEventListener('dblclick', function() {
             if (isMoving === false) {
                 moveBall();
                 isMoving = true;
             }
         }, false);
 
-        window.addEventListener('mousemove', function (ev) {
+        window.addEventListener('mousemove', function(ev) {
             pad.x = ev.clientX - canvas.offsetLeft;
             padCollisionWithWalls();
             movePad();
@@ -83,7 +83,7 @@ function createGame(canvasSelector) {
     function drawBall(ball, context) {
 
         ballImage.src = ballImagePath;
-        ballImage.onload = function () {
+        ballImage.onload = function() {
             context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
         };
         context.drawImage(ballImage, ball.x, ball.y, ball.radius * 2, ball.radius * 2);
@@ -91,7 +91,7 @@ function createGame(canvasSelector) {
 
     function moveBall() {
         context.clearRect(prevCoordinatesX, prevCoordinatesY, 2 * ball.radius, 2 * ball.radius);
-        
+
         drawBall(ball, context);
 
         prevCoordinatesX = ball.x;
@@ -101,11 +101,12 @@ function createGame(canvasSelector) {
         ball.y += (ballDeltaY * ball.speed);
 
 
-        if(ball.y + ball.radius * 2 > canvas.height){
+        if (ball.y + ball.radius * 2 > canvas.height) {
             endLive();
-            //isMoving = false;
+            isMoving = false;
             window.cancelAnimationFrame(moveBall);
-            //return;
+            context.clearRect(0, 360, 600, 40);
+            return;
         }
 
         if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
@@ -116,7 +117,7 @@ function createGame(canvasSelector) {
         } else if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
             ballDeltaY *= -1;
         }
-        
+
         bricks.some(brick => collisionWithBricks(ball, brick));
 
         window.requestAnimationFrame(moveBall);
@@ -125,9 +126,9 @@ function createGame(canvasSelector) {
     function collisionWithBricks(ball, brick) {
 
         var half = {
-            x: (brick.width / 2),
-            y: (brick.height / 2)
-        },
+                x: (brick.width / 2),
+                y: (brick.height / 2)
+            },
             center = {
                 x: ball.x + ball.radius - (brick.x + half.x),
                 y: ball.y + ball.radius - (brick.y + half.y)
@@ -153,9 +154,9 @@ function createGame(canvasSelector) {
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
 
                 brick.isDestroyed = true;
-                context.clearRect(brick.x, brick.y, brick.width, brick.height);  
+                context.clearRect(brick.x, brick.y, brick.width, brick.height);
             }
-            
+
             return;
         }
 
@@ -204,16 +205,16 @@ function createGame(canvasSelector) {
         }
 
         if (!isMoving) {
-            var xDiff = pad.x-ball.x;
-            ball.x += xDiff+pad.width/2-ball.radius;
-            context.clearRect(0,ball.y, canvas.width, 2*ball.radius);
+            var xDiff = pad.x - ball.x;
+            ball.x += xDiff + pad.width / 2 - ball.radius;
+            context.clearRect(0, ball.y, canvas.width, 2 * ball.radius);
             drawBall(ball, context);
         }
 
         drawPad();
     }
 
-    
+
     function padCollisionWithWalls() {
         if (pad.x < 0) {
             pad.x = 0;
@@ -224,7 +225,7 @@ function createGame(canvasSelector) {
     }
 
     function padCollisionWithBall(pad, ball) {
-        return !!(ball.x + 2*ball.radius > pad.x &&
+        return !!(ball.x + 2 * ball.radius > pad.x &&
             ball.x < pad.x + pad.width &&
             ball.y + ball.radius + (ballDeltaY * ball.speed) * 3 >= pad.y - pad.height);
     }
@@ -238,8 +239,8 @@ function createGame(canvasSelector) {
             imgs.push(img);
         }
 
-        $.each(imgs, function (key, value) {
-            value.onload = function () {
+        $.each(imgs, function(key, value) {
+            value.onload = function() {
                 context.drawImage(value, bricks[key].x, bricks[key].y, bricks[key].width, bricks[key].height);
             };
         });
@@ -319,59 +320,58 @@ function createGame(canvasSelector) {
 
     function endLive() {
         lives -= 1;
-        if(lives===0)
-        {
+        if (lives === 0) {
             exitMessage = "Next game will be better!";
             moveBall = undefined;
             gameScreen.style.display = '';
             finalScreen.style.display = 'block';
             console.log("End Game");
-        }else{
+        } else {
             ball.x = canvas.width / 2 - ball.radius;
             ball.y = canvas.height - 50;
-            //isMoving = false;
-            pad.x = canvas.width / 2 - pad.width/2;
+            isMoving = false;
+            pad.x = canvas.width / 2 - pad.width / 2;
         }
         console.log(lives);
     }
 
     function printLives() {
         context.font = "15px Arial";
-        context.clearRect(500,0,250,20);
-        context.fillText("Lives :"+lives, 530, 20);
+        context.clearRect(500, 0, 250, 20);
+        context.fillText("Lives :" + lives, 530, 20);
     }
 
     function drawAll(params) {
         movePad();
         printLives();
         //moveBall();
-    
+
         window.requestAnimationFrame(drawAll);
     }
     drawAll();
 
-    function isGameSuccess() {        
+    function isGameSuccess() {
         var allBricksDestroyed = false;
-        
-        for (var i = 0, len = bricks.length; i < len; i+=1) {
-            if (bricks[i].isDestroyed===false) {
+
+        for (var i = 0, len = bricks.length; i < len; i += 1) {
+            if (bricks[i].isDestroyed === false) {
                 return false;
             }
-            allBricksDestroyed = true; 
+            allBricksDestroyed = true;
         }
 
-        if (allBricksDestroyed ) {
+        if (allBricksDestroyed) {
             exitMessage = "Great game! Congrats!";
             moveBall = undefined;
             //screen can be changed here
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     return {
-        "start": function () {
+        "start": function() {
             drawBricks();
             drawPad();
             gameLoop();
