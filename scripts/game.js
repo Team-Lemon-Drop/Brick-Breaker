@@ -31,7 +31,7 @@ function createGame(canvasSelector) {
     function gameLoop() {
         printLives();
         drawBall(ball, context);
-        //changed to keydown
+        
         window.addEventListener('keydown', function (ev) {
             if ((ev.keyCode == 32)  && isMoving === false) {
                 moveBall();
@@ -61,9 +61,8 @@ function createGame(canvasSelector) {
             } 
         }, false);
 
-        window.addEventListener('dblclick', function (ev) {
+        window.addEventListener('dblclick', function () {
             if (isMoving === false) {
-                console.log(ev);
                 moveBall();
                 isMoving = true;
             }
@@ -101,6 +100,7 @@ function createGame(canvasSelector) {
 
         if(ball.y + ball.radius * 2 > canvas.height){
             endLive();
+            isMoving = false;
             window.cancelAnimationFrame(moveBall);
             //return;
         }
@@ -133,6 +133,9 @@ function createGame(canvasSelector) {
             x: Math.abs(center.x) - half.x,
             y: Math.abs(center.y) - half.y
         };
+
+        isGameSuccess()
+
         if (side.x > ball.radius || side.y > ball.radius) { // no collision
             return;
         }
@@ -143,15 +146,16 @@ function createGame(canvasSelector) {
 
                 brick.isDestroyed = true;
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
-
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
 
                 brick.isDestroyed = true;
-                context.clearRect(brick.x, brick.y, brick.width, brick.height);
+                context.clearRect(brick.x, brick.y, brick.width, brick.height);  
             }
+            
             return;
         }
+
         if (brick.isDestroyed === false) {
             ballDeltaX = center.x < 0 ? -1 : 1; // hits the corner of the brick
             ballDeltaY = center.y < 0 ? -1 : 1; // bounces back in the same direction           
@@ -305,22 +309,18 @@ function createGame(canvasSelector) {
 
     function endLive() {
         lives -= 1;
-        ball.x = canvas.width / 2 - ball.radius;
-        ball.y = canvas.height - 50;
-        isMoving = false;
-        //pad.x = canvas.width / 2 - pad.width/2;
-        /*
-        ball.direction = [1, -1];
-        ball.ballDeltaX = 1;
-        ball.ballDeltaY = 1;
-        */
-        isGameSuccess();
-        console.log(lives);
         if(lives===0)
         {
-            
+            moveBall = undefined;
+            //screen can be changed here
             console.log("End Game")
+        }else{
+            ball.x = canvas.width / 2 - ball.radius;
+            ball.y = canvas.height - 50;
+            isMoving = false;
+            pad.x = canvas.width / 2 - pad.width/2;
         }
+        console.log(lives);
     }
 
     function printLives() {
@@ -342,22 +342,20 @@ function createGame(canvasSelector) {
         var allBricksDestroyed = false;
         
         for (var i = 0, len = bricks.length; i < len; i+=1) {
-            if (bricks[i].isDestroyed===false || bricks.length != 40) {
-                console.log(bricks[i].isDestroyed);
-                return;
+            if (bricks[i].isDestroyed===false) {
+                return false;
             }
-            allBricksDestroyed = true;
-            console.log("Success!"); 
+            allBricksDestroyed = true; 
         }
 
-        if (allBricksDestroyed || lives<=0) {
+        if (allBricksDestroyed ) {
+            moveBall = undefined;
+            //screen can be changed here
             return true;
         }else{
             return false;
         }
     }
-
-    
 
     return {
         "start": function () {
