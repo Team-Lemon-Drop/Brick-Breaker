@@ -1,5 +1,12 @@
 body{
     background-image: url("../images/background.png");
+
+    
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .game-div{    
