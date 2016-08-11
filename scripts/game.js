@@ -156,29 +156,27 @@ function createGame(canvasSelector) {
                 ballDeltaX = center.x * side.x < 0 ? -1 : 1;
 
                 brick.isDestroyed = true;
-                bonusX = brick.x+brick.width/2;
-                bonusY = brick.y+brick.height;
-
-                moveBonus();
 
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
                 if(randomBonus < 0.1){
+                    bonusX = brick.x+brick.width/2;
+                    bonusY = brick.y+brick.height;
                     drawBonus(bonusX,bonusY);
+                    moveBonus();
                 }
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
 
                 brick.isDestroyed = true;
-                bonusX = brick.x+brick.width/2;
-                bonusY = brick.y+brick.height;
-
-                moveBonus();
 
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
                 score +=1;
                 if(randomBonus < 0.1){
+                    bonusX = brick.x+brick.width/2;
+                    bonusY = brick.y+brick.height;
                     drawBonus(bonusX,bonusY);
+                    moveBonus();
                 }
             }
 
