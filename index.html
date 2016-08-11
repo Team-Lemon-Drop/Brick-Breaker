@@ -11,42 +11,48 @@
 </head>
 
 <body>
-    <div id="heading">
-       <img src="images/logo.png" alt="Brick Breaker">
-    </div>
-    <div id="menu" class="game-div">
-        <section class="carousel">
-            <div id="navigation">
-                <figure id="play-button"><strong> PLAY GAME </strong></figure>
-                <figure id="how-button"><strong> HOW TO </strong></figure>
-                <figure id="credits-button"><strong> CREDITS </strong></figure>
-            </div>
-        </section>
-    </div>
-    <div id="game-container" class="game-div">
-        <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>
-    </div>
-    <div id="end-screen" class="game-div">
-        <svg id="svg-container" width="600" height="400">      
-            <text class="text" x="120" y="60" fill="cadetblue" style="font-size: 34px; font-weight:bold">Great Game! Congrats!</text>      
-            <path class="path" d="M 150 200 
-                                  A 160 160, 0, 0, 0, 300 300 
-                                  L 300 200 Z" fill="lightblue" stroke="black"></path>
-            <path class="path" d="M 150 200 
-                                  A 160 160, 0, 0, 1, 300 100 
-                                  L 300 200 Z" fill="lightblue" stroke="black"></path>
-            <path class="path" id="play-again" d="M 440 200 
-                                  A 160 160, 0, 0, 0, 300 100 
-                                  L 300 200 Z" fill="lightblue" stroke="black"></path>
-            <path class="path" d="M 300 300 
-                                  A 160 160, 0, 0, 0, 440 200 
-                                  L 300 200 Z" fill="lightblue" stroke="black"></path>
-            <text class="text" x="200" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px; font-weight:bold">Nice try!</text>
-            <text class="text" x="304" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Play Again!</text>            
-            <text class="text" x="305" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Go to menu</text>                      
-            <text class="text" x="175" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Hey,gorgeous</text>
-        </svg>
-    </div>
+    <section id="game-section">
+        <div id="heading">
+            <img src="images/logo.png" alt="Brick Breaker">
+        </div>
+        <div id="menu" class="game-div">
+            <section class="carousel">
+                <div id="navigation">
+                    <figure id="play-button"><strong> PLAY GAME </strong></figure>
+                    <figure id="how-button"><strong> HOW TO </strong></figure>
+                    <figure id="credits-button"><strong> CREDITS </strong></figure>
+                </div>
+            </section>
+        </div>
+        <div id="game-container" class="game-div">
+            <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>
+        </div>
+        <div id="end-screen" class="game-div">
+            <svg id="svg-container" width="600" height="400">      
+                <text class="text" x="120" y="60" fill="cadetblue" style="font-size: 34px; font-weight:bold">Great Game! Congrats!</text>      
+                <path class="path" d="M 150 200 
+                                    A 160 160, 0, 0, 0, 300 300 
+                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
+                <path class="path" d="M 150 200 
+                                    A 160 160, 0, 0, 1, 300 100 
+                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
+                <path class="path" id="play-again" 
+                                    d="M 440 200 
+                                    A 160 160, 0, 0, 0, 300 100 
+                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
+                <path class="path" id="go-to-menu" 
+                                    d="M 300 300 
+                                    A 160 160, 0, 0, 0, 440 200 
+                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
+                <text class="text" x="200" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px; font-weight:bold">Nice try!</text>
+                <text class="text" x="304" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Play Again!</text>            
+                <text class="text" x="305" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Go to menu</text>                      
+                <text class="text" x="175" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Hey,gorgeous</text>
+            </svg>
+        </div>
+    </section>
+    <hr>    
+    <footer>Project by Team Lemon Drop</footer>
     <script>
         window.onload = function() {
             getStates();            

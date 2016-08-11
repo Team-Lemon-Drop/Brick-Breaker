@@ -109,5 +109,37 @@ strong{
     text-shadow: 1px 1px 1px darkgoldenrod;
 }
 
+.team-members{
+    list-style-type: none;
+    text-align: center;
+    padding: 5px;
+}
+
+#contributors{
+    text-align: center;
+    padding: 5px;
+    color: cadetblue;
+    text-decoration: underline;
+}
+
+.team-members li{
+    padding: 5px;
+    font-size: 22px;
+}
+
+.go-back-btn{
+    margin: auto;
+    display: block;
+    border-radius: 5px;
+    background-color: cadetblue;
+    font-size: 16px;
+}
+
+footer{
+    text-align: center;
+    font-weight: bold;
+    color: indianred;
+}
+
 
 

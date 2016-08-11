@@ -1,22 +1,30 @@
 var getStates = function () {
-    var playButton = document.getElementById("play-button"),
+     var playButton = document.getElementById("play-button"),
         howToButton = document.getElementById("how-button"),
         creditsButton = document.getElementById("credits-button"),
         playAgainButton = document.getElementById("play-again"),
-        $paths = $(".path");
+        returnToMenu = document.getElementById("go-to-menu"),
+        endScreen = document.getElementById("end-screen"),
+        $paths = $(".path"),
+        menu = document.getElementById("menu"),
+        htmlOfStartScreen = menu.innerHTML, 
+        backButton = document.createElement("button"),    
+        div = document.createElement("div"),
+        contributorsText = document.createElement('h2'),        
+        rulesDiv = div.cloneNode(true),
+        section = document.getElementById("game-section");
+
+         backButton.className = "go-back-btn";
 
     var startGame = function () {
-        var gameContainer = document.getElementById("game-container"),
-            menu = document.getElementById("menu"),
-            endScreen = document.getElementById("end-screen");
-
-        menu.style.display = 'none';
-        gameContainer.style.display = 'block';
-        endScreen.style.display = 'none';
-
+        var gameContainer = document.getElementById("game-container");
+            
+            menu.style.display = 'none';
+            gameContainer.style.display = 'block';
+            endScreen.style.display = 'none';
+        
         var game = createGame("#game-canvas");
-        game.start();
-
+            game.start();
     };
 
     var showRules = function () {
@@ -42,24 +50,21 @@ var getStates = function () {
         return menu;
     };
 
-    var credits = function () {
-        var menu = document.getElementById("menu"),
-            heading = document.createElement("h5");
-
-        menu.innerHTML = '';
-        heading.innerText = "Game created by: DimaAtanasova, dimpechev, maryakach, nikola.stefanov, pepchon, pspassova, teod_st";
-        menu.appendChild(heading);
-    };
-
-    var overEllipse = function (target) {
-        target.setAttribute('fill', 'lightgoldenrodyellow');
+     var overEllipse = function (target) {        
+        target.setAttribute('fill', 'lightgoldenrodyellow'); 
+        target.style.cursor = "pointer";
     };
 
     var outOfEllipse = function (target) {
         target.setAttribute('fill', 'lightblue');
     };
 
-
+    
+    var goToMainMenu = function(){
+        rulesDiv.style.display = 'none';
+        endScreen.style.display = 'none';
+        menu.style.display = '';        
+    };
 
     $paths.mouseover(function (event) {
         overEllipse(event.target);
@@ -69,9 +74,40 @@ var getStates = function () {
         outOfEllipse(event.target);
     });
 
+     function createRules(){
+        var members = ["DimaAtanasova", "dimpechev", "maryakach", "nikola.stefanov", "pepchon", "pspassova", "teod_st"],
+            teamUl = document.createElement('ul'),
+            li = document.createElement("li");
+        
+        rulesDiv.style.display = 'block';
+        contributorsText.innerText = "Contributors:";
+        contributorsText.id = "contributors";
+        menu.style.display = "none";
+        rulesDiv.className = "game-div";    
+        teamUl.className = 'team-members';
+
+        for(var i = 0; i < 7; i+= 1){
+            var member = li.cloneNode(true);
+            member.innerText = members[i];
+            member.className = "member";
+            teamUl.appendChild(member);
+        }
+
+        rulesDiv.appendChild(contributorsText);
+        rulesDiv.appendChild(teamUl);   
+        backButton.innerText = "Go back";  
+        rulesDiv.appendChild(backButton); 
+
+        section.appendChild(rulesDiv);
+    }
+
     playButton.addEventListener('click', startGame, false);
+    playAgainButton.addEventListener('click', startGame, false);   
+
     howToButton.addEventListener('click', showRules, false);
-    creditsButton.addEventListener('click', credits, false);
-    playAgainButton.addEventListener('click', startGame, false);
+    creditsButton.addEventListener('click', createRules, false);    
+
+    backButton.addEventListener('click', goToMainMenu, false);
+    returnToMenu.addEventListener('click', goToMainMenu, false);
 
 };
