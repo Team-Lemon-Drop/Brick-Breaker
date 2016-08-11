@@ -103,7 +103,7 @@ function createGame(canvasSelector) {
         if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
             ballDeltaX *= -1;
         }
-        if (ball.y < 0){
+        if (ball.y < 0) {
             ballDeltaY *= -1;
         }
         if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
@@ -182,7 +182,7 @@ function createGame(canvasSelector) {
 
 
     function movePad() {
-        context.clearRect(0, pad.y, pad.x, pad.height);
+        context.clearRect(0, 350, canvas.width, 50);
         context.clearRect(pad.x + pad.width, pad.y, canvas.width, pad.height);
 
         if (onRightArrowPressed && pad.x < canvas.width - (pad.width)) {
@@ -322,6 +322,7 @@ function createGame(canvasSelector) {
         if (lives === 0) {
             exitMessage = "Next game will be better!";
             moveBall = undefined;
+            document.getElementById('exitMessage').innerHTML = exitMessage;
             gameScreen.style.display = '';
             finalScreen.style.display = 'block';
             console.log("End Game");
@@ -362,7 +363,9 @@ function createGame(canvasSelector) {
         if (allBricksDestroyed) {
             exitMessage = "Great game! Congrats!";
             moveBall = undefined;
-            //screen can be changed here
+            document.getElementById('exitMessage').innerHTML = exitMessage;
+            gameScreen.style.display = '';
+            finalScreen.style.display = 'block';
             return true;
         } else {
             return false;
