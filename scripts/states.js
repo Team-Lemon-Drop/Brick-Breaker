@@ -7,10 +7,12 @@ var getStates = function () {
 
     var startGame = function () {
         var gameContainer = document.getElementById("game-container"),
-            menu = document.getElementById("menu");
+            menu = document.getElementById("menu"),
+            endScreen = document.getElementById("end-screen");
 
             menu.style.display = 'none';
             gameContainer.style.display = 'block';
+            endScreen.style.display = 'none';
         
         var game = createGame("#game-canvas");
             game.start();

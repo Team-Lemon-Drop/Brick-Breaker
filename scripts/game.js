@@ -23,7 +23,9 @@ function createGame(canvasSelector) {
         numberOfBricksInCol = 5,
         
         lives = 3,
-        exitMessage = "";
+        exitMessage = "",
+        finalScreen = document.getElementById('end-screen'),
+        gameScreen = document.getElementById('game-container');
 
     document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
     
@@ -135,7 +137,7 @@ function createGame(canvasSelector) {
             y: Math.abs(center.y) - half.y
         };
 
-        isGameSuccess()
+        isGameSuccess();
 
         if (side.x > ball.radius || side.y > ball.radius) { // no collision
             return;
@@ -319,10 +321,11 @@ function createGame(canvasSelector) {
         lives -= 1;
         if(lives===0)
         {
-            exitMessage = "Next game will be better!"
+            exitMessage = "Next game will be better!";
             moveBall = undefined;
-            //screen can be changed here
-            console.log("End Game")
+            gameScreen.style.display = '';
+            finalScreen.style.display = 'block';
+            console.log("End Game");
         }else{
             ball.x = canvas.width / 2 - ball.radius;
             ball.y = canvas.height - 50;

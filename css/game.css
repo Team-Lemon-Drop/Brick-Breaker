@@ -1,6 +1,11 @@
-.game-div{
+body{
+    background-image: url("../images/background.png");
+}
+
+.game-div{    
     background-color: whitesmoke;
-    border: 1px solid black;   
+    border: 3px solid yellowgreen;  
+    border-radius: 10px; 
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -17,13 +22,13 @@ div#game-container{
     display: none;
 }
 
-#heading{
-    height: 100px;    
-    background-color: white;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
+div#end-screen{
+    display: none;
+}
+
+img{
+    display: block;
+    margin: auto;
 }
 
 .carousel {   
