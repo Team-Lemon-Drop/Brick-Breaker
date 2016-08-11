@@ -1,7 +1,7 @@
 function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
-
+        
         ball = generateBall(),
         ballImage = new Image(),
         ballImagePath = "images/lemon-slice.png",
@@ -22,11 +22,12 @@ function createGame(canvasSelector) {
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5,
         
-        lives = 3;
+        lives = 3,
+        exitMessage = "";
 
     document.getElementById('game-canvas').style.cursor = 'none';//hides the cursor
-
     
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     function gameLoop() {
         printLives();
@@ -100,7 +101,7 @@ function createGame(canvasSelector) {
 
         if(ball.y + ball.radius * 2 > canvas.height){
             endLive();
-            isMoving = false;
+            //isMoving = false;
             window.cancelAnimationFrame(moveBall);
             //return;
         }
@@ -198,6 +199,13 @@ function createGame(canvasSelector) {
                 drawPad();
                 return;
             }
+        }
+
+        if (!isMoving) {
+            var xDiff = pad.x-ball.x;
+            ball.x += xDiff+pad.width/2-ball.radius;
+            context.clearRect(0,ball.y, canvas.width, 2*ball.radius);
+            drawBall(ball, context);
         }
 
         drawPad();
@@ -311,13 +319,14 @@ function createGame(canvasSelector) {
         lives -= 1;
         if(lives===0)
         {
+            exitMessage = "Next game will be better!"
             moveBall = undefined;
             //screen can be changed here
             console.log("End Game")
         }else{
             ball.x = canvas.width / 2 - ball.radius;
             ball.y = canvas.height - 50;
-            isMoving = false;
+            //isMoving = false;
             pad.x = canvas.width / 2 - pad.width/2;
         }
         console.log(lives);
@@ -349,6 +358,7 @@ function createGame(canvasSelector) {
         }
 
         if (allBricksDestroyed ) {
+            exitMessage = "Great game! Congrats!";
             moveBall = undefined;
             //screen can be changed here
             return true;
