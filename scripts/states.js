@@ -5,13 +5,12 @@ var getStates = function () {
         playAgainButton = document.getElementById("play-again"),
         returnToMenu = document.getElementById("go-to-menu"),
         endScreen = document.getElementById("end-screen"),
+        creditsDiv = document.getElementById("credits"),
         $paths = $(".path"),
         menu = document.getElementById("menu"),
-        htmlOfStartScreen = menu.innerHTML, 
         backButton = document.createElement("button"),    
-        div = document.createElement("div"),
-        contributorsText = document.createElement('h2'),        
-        rulesDiv = div.cloneNode(true),
+        contributorsText = document.createElement('h2'),     
+        rulesDiv = document.getElementById('rules'),
         section = document.getElementById("game-section");
 
          backButton.className = "go-back-btn";
@@ -27,27 +26,37 @@ var getStates = function () {
             game.start();
     };
 
-    var showRules = function () {
-        var menu = document.getElementById("menu"),
-            heading = document.createElement("h2"),
-            rule = document.createElement("p");
-            rule.className='rules';
-            var warning=document.createElement("p");
-            warning.className='warning';
+    var showCredits = function(){
+        var credit = document.getElementById('credits-div');
+        credit.style.display = '';
+    };
 
-        menu.innerHTML = '';
-        heading.innerText = "Rules Of Game";
-        menu.appendChild(heading);
+    var showRules = function () {    
+      var heading = document.createElement("h2"),
+            rule = document.createElement("p"),
+            warning = document.createElement("p");
+      
+        rule.className='rules';
+        warning.className='warning';
+        heading.className = 'heading';
 
-        rule.innerText = '- press "SPACE" to start the game \n- use " < " or " > " to move the pad';
-        menu.appendChild(rule);
+        rulesDiv.style.display = '';
+        menu.style.display = 'none';
+
+        rulesDiv.className = 'game-div';        
+        heading.innerText = "Rules Of Game"; 
+
+        rule.innerText = '- press "SPACE" to start the game \n- use " < " or " > " to move the pad';      
 
         warning.innerText=
         "Your goal is to destroy all the bricks. :-)\n"+
         "You shouldn't let the ball hit the floor! \nYou have exactly 3 lives!";
-        menu.appendChild(warning);
-
-        return menu;
+        
+        rulesDiv.appendChild(heading);
+        rulesDiv.appendChild(rule);
+        rulesDiv.appendChild(warning);
+        rulesDiv.appendChild(backButton);
+        section.appendChild(rulesDiv);
     };
 
      var overEllipse = function (target) {        
@@ -61,9 +70,12 @@ var getStates = function () {
 
     
     var goToMainMenu = function(){
-        rulesDiv.style.display = 'none';
+        creditsDiv.style.display = 'none';
         endScreen.style.display = 'none';
-        menu.style.display = '';        
+        rulesDiv.style.display = 'none';
+        menu.style.display = '';      
+        rulesDiv.innerHTML = '';  
+        creditsDiv.innerHTML = '';
     };
 
     $paths.mouseover(function (event) {
@@ -74,38 +86,39 @@ var getStates = function () {
         outOfEllipse(event.target);
     });
 
-     function createRules(){
+     function createCredits(){ 
         var members = ["DimaAtanasova", "dimpechev", "maryakach", "nikola.stefanov", "pepchon", "pspassova", "teod_st"],
-            teamUl = document.createElement('ul'),
-            li = document.createElement("li");
-        
-        rulesDiv.style.display = 'block';
+             teamUl = document.createElement('ul'),
+             li = document.createElement("li");
+
+        creditsDiv.style.display = 'block';
         contributorsText.innerText = "Contributors:";
         contributorsText.id = "contributors";
         menu.style.display = "none";
-        rulesDiv.className = "game-div";    
+        creditsDiv.className = "game-div";    
         teamUl.className = 'team-members';
 
-        for(var i = 0; i < 7; i+= 1){
+        for(var i = 0, len = members.length; i < len; i+= 1){
             var member = li.cloneNode(true);
+
             member.innerText = members[i];
             member.className = "member";
             teamUl.appendChild(member);
         }
 
-        rulesDiv.appendChild(contributorsText);
-        rulesDiv.appendChild(teamUl);   
+        creditsDiv.appendChild(contributorsText);
+        creditsDiv.appendChild(teamUl);   
         backButton.innerText = "Go back";  
-        rulesDiv.appendChild(backButton); 
+        creditsDiv.appendChild(backButton); 
 
-        section.appendChild(rulesDiv);
+        section.appendChild(creditsDiv);        
     }
 
     playButton.addEventListener('click', startGame, false);
     playAgainButton.addEventListener('click', startGame, false);   
 
     howToButton.addEventListener('click', showRules, false);
-    creditsButton.addEventListener('click', createRules, false);    
+    creditsButton.addEventListener('click', createCredits, false);    
 
     backButton.addEventListener('click', goToMainMenu, false);
     returnToMenu.addEventListener('click', goToMainMenu, false);

@@ -89,15 +89,13 @@ strong{
 #navigation figure:nth-child(2) { transform: rotateY(  33deg ) translateZ( 246px ); }
 #navigation figure:nth-child(3) { transform: rotateY(  327deg ) translateZ( 246px ); }
 
-#menu h2{
-    line-height: 2;
+.heading{
     text-align: center;
     font-size: xx-large;
     font-family: 'Times New Roman', Times, serif;
     color: cadetblue;
     text-shadow:2px 2px 5px white;
 }
-
 .rules{
     display: block;
     margin-left: 40px;
@@ -153,6 +151,11 @@ strong{
     font-family: 'Times New Roman', Times, serif; 
     font-size: 20px;  
     color: cadetblue;
+}
+
+.go-back-btn:hover{
+    border-style:inset;
+    background-color: lightgray;
 }
 
 footer{
