@@ -17,6 +17,10 @@ function createGame(canvasSelector) {
         onLeftArrowPressed = false,
         onRightArrowPressed = false,
 
+        bonusRarius = 20,
+        score = 0,
+        randomBonus = Math.random(),
+
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
@@ -151,13 +155,23 @@ function createGame(canvasSelector) {
             if (Math.abs(side.x) < ball.radius && side.y < 0) { // hits the top or the bottom of the brick
                 ballDeltaX = center.x * side.x < 0 ? -1 : 1;
 
-                brick.isDestroyed = true;
+                brick.isDestroyed = true,
+                    bonusX = brick.x,
+                    bonusY = brick.y;
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
+                score +=1;
+                if(randomBonus < 0.1){
+                    drawBonus(bonusX,bonusY);
+                }
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
 
                 brick.isDestroyed = true;
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
+                score +=1;
+                if(randomBonus < 0.1){
+                    drawBonus(bonusX,bonusY);
+                }
             }
 
             return;
@@ -375,7 +389,19 @@ function createGame(canvasSelector) {
             return false;
         }
     }
+    function createBonus() {
 
+    }
+    function drawBonus(bonusX , bonusY) {
+        //let image = new Image();
+        //image.src = "bonus img";
+        //let pattern = context.createPattern(image,'repeat');
+        context.beginPath();
+        context.arc(bonusX, bonusY, bonusRarius, 0, Math.PI*2);
+        context.fillStyle = "green";
+        context.fill();
+        context.closePath();
+    }
     return {
         "start": function() {
             drawBricks();
