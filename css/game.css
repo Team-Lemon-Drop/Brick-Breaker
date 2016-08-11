@@ -1,7 +1,5 @@
 body{
-    background-image: url("../images/background.png");
-
-    
+    background-image: url("../images/background.png");    
     -khtml-user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
@@ -16,15 +14,10 @@ body{
     margin-right: auto;
     width:600px;
     height:400px;
-
     background-color: whitesmoke;
     border: 3px solid yellowgreen;  
     border-radius: 10px;   
 }
-
-#menu{
-    background-color:whitesmoke;
-} 
 
 div#game-container{
     display: none;
@@ -34,7 +27,7 @@ div#end-screen{
     display: none;
 }
 
-img{
+#heading img{
     display: block;
     margin: auto;
 }
@@ -47,55 +40,55 @@ img{
     perspective: 1000px;
 }
 
-#navigation {
-    top:70px;
-    left:45px;
-    width: 250px;
-    height: 100px;
-    position: absolute;
-    transform-style: preserve-3d;
-}
+    #navigation {
+        top:70px;
+        left:45px;
+        width: 250px;
+        height: 100px;
+        position: absolute;
+        transform-style: preserve-3d;
+    }
 
-#navigation figure {
-    position: absolute;
-    width:130px;
-    height: 120px;
-    left: 150px;
+        #navigation figure {
+            position: absolute;
+            width:130px;
+            height: 120px;
+            left: 150px;
+            border:1px;
+            border-color: whitesmoke;
+            border-style: outset;
+            background-color: lightblue;
+            box-shadow: 10px 10px 5px silver;
+            color:cadetblue;
+            text-align: center;
+        }
 
-  border:1px;
-  border-color: whitesmoke;
-  border-style: outset;
-  background-color: lightblue;
-  box-shadow: 10px 10px 5px silver;
+            #navigation figure strong{
+                line-height: 88px;
+                font-size: large; 
+                font-family: "Times New Roman", Georgia, Serif; 
+            }
 
-    color:cadetblue;
-    text-align: center;
-}
-
-strong{
-    line-height: 88px;
-      font-size: large; 
-    font-family: "Times New Roman", Georgia, Serif; 
-}
-
-#navigation figure:hover{
-    height: 120px;
-    top:-6px;
-    background-color: lightgoldenrodyellow;
-    color:indianred;
-}
+            #navigation figure:hover{
+                height: 120px;
+                top:-6px;
+                background-color: lightgoldenrodyellow;
+                color:indianred;
+                cursor: pointer;
+            }
 
 #navigation figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 246px ); }
 #navigation figure:nth-child(2) { transform: rotateY(  33deg ) translateZ( 246px ); }
 #navigation figure:nth-child(3) { transform: rotateY(  327deg ) translateZ( 246px ); }
 
-.heading{
+h2.heading{
     text-align: center;
     font-size: xx-large;
     font-family: 'Times New Roman', Times, serif;
     color: cadetblue;
-    text-shadow:2px 2px 5px white;
+    text-shadow:2px 2px 5px white;    
 }
+
 .rules{
     display: block;
     margin-left: 40px;
@@ -125,27 +118,16 @@ strong{
     text-shadow: 2px 1px 6px silver;
 }
 
-#contributors{
-    line-height: 2;
-    text-align: center;
-    font-size: xx-large;
-    font-family: 'Times New Roman', Times, serif;
-    color: cadetblue;
-    text-shadow:2px 2px 5px white;
-    margin: 5px;
-}
-
-.team-members li{
-    padding: 4px;
-    font-size: 24px;
-}
+    .team-members li{
+        padding: 4px;
+        font-size: 24px;
+    }
 
 .go-back-btn{
     margin: auto;
     display: block;
     width:100px;
     height: 30px;
-
     border-radius: 7px;
     background-color: lightgrey;
     font-family: 'Times New Roman', Times, serif; 
@@ -153,10 +135,10 @@ strong{
     color: cadetblue;
 }
 
-.go-back-btn:hover{
-    border-style:inset;
-    background-color: lightgray;
-}
+    .go-back-btn:hover{
+        border-style:inset;
+        background-color: lightgray;
+    }
 
 footer{
     text-align: center;
@@ -165,6 +147,3 @@ footer{
     color: brown;
     text-shadow: 1px 1px 1px white;
 }
-
-
-
