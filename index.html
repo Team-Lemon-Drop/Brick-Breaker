@@ -6,10 +6,7 @@
     <title>Brick Breaker</title>
     <link rel="stylesheet" href="css/game.css">
     <script src="scripts/jquery.min.js"></script>
-    <script src="scripts/game.js"></script>
-    <script src="scripts/states.js"></script>
 </head>
-
 <body>
     <section id="game-section">
         <div id="heading">
@@ -28,33 +25,42 @@
             <canvas id="game-canvas" class="canvas" width="600" height="400"></canvas>
         </div>
         <div id="end-screen" class="game-div">
-            <svg id="svg-container" width="600" height="400">      
+            <svg id="svg-container" width="600" height="400" xmlns="http://www.w3.org/2000/svg">      
+
                 <text id="exitMessage" class="text" x="120" y="60" fill="cadetblue" style="font-size: 34px; font-weight:bold">Great Game! Congrats!</text>      
-                <path class="path" d="M 150 200 
-                                    A 160 160, 0, 0, 0, 300 300 
-                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
-                <path class="path" d="M 150 200 
+                <g id="play-again">
+                    <path class="path" d="M 440 200 
+                                       A 160 160, 0, 0, 0, 300 100 
+                                       L 300 200 Z" fill="lightblue" stroke="black"></path>
+                    <text class="text" id="play-again-text" x="304" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Play Again!</text>                         
+                </g>
+                <g id="go-to-menu">
+                    <path class="path" d="M 300 300 
+                                       A 160 160, 0, 0, 0, 440 200 
+                                       L 300 200 Z" fill="lightblue" stroke="black"></path>
+                    <text class="text" id="menu-text"" x="305" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Go to menu</text>                
+                </g>
+                <g>
+                    <path class="path" d="M 150 200 
                                     A 160 160, 0, 0, 1, 300 100 
                                     L 300 200 Z" fill="lightblue" stroke="black"></path>
-                <path class="path" id="play-again" 
-                                    d="M 440 200 
-                                    A 160 160, 0, 0, 0, 300 100 
+                    <text class="text" x="200" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px; font-weight:bold">Nice try!</text>
+                </g>
+                <g>
+                    <path class="path" d="M 150 200 
+                                    A 160 160, 0, 0, 0, 300 300 
                                     L 300 200 Z" fill="lightblue" stroke="black"></path>
-                <path class="path" id="go-to-menu" 
-                                    d="M 300 300 
-                                    A 160 160, 0, 0, 0, 440 200 
-                                    L 300 200 Z" fill="lightblue" stroke="black"></path>
-                <text class="text" x="200" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px; font-weight:bold">Nice try!</text>
-                <text class="text" x="304" y="180" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Play Again!</text>            
-                <text class="text" x="305" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Go to menu</text>                      
-                <text class="text" x="175" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Hey,gorgeous</text>
+                    <text class="text" x="175" y="240" fill="cadetblue" style="font-family:lato; font-size: 20px;font-weight:bold">Hey,gorgeous</text>                
+                </g>          
             </svg>
         </div>
         <div id="credits" display="none"></div>
         <div id="rules" display="none"></div>
     </section>
     <hr>
-    <footer>Project by Team Lemon Drop</footer>
+    <footer>Project by Team Lemon Drop</footer>    
+    <script src="scripts/game.js"></script>
+    <script src="scripts/states.js"></script>
     <script>
         window.onload = function() {
             getStates();
