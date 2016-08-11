@@ -100,22 +100,18 @@ function createGame(canvasSelector) {
         ball.x += (ballDeltaX * ball.speed);
         ball.y += (ballDeltaY * ball.speed);
 
-
+        if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
+            ballDeltaX *= -1;
+        }
+        if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
+            ballDeltaY *= -1;
+        }
         if (ball.y + ball.radius * 2 > canvas.height) {
             endLive();
             isMoving = false;
             window.cancelAnimationFrame(moveBall);
             context.clearRect(0, 360, 600, 40);
             return;
-        }
-
-        if (ball.x < 0 || ball.x + ball.radius * 2 > canvas.width) {
-            ballDeltaX *= -1;
-        }
-        if (ball.y < 0 || ball.y + ball.radius * 2 > canvas.height) {
-            ballDeltaY *= -1;
-        } else if (padCollisionWithBall(pad, ball)) { //problem with the lemon pic-it is rectangle
-            ballDeltaY *= -1;
         }
 
         bricks.some(brick => collisionWithBricks(ball, brick));
