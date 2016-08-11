@@ -20,7 +20,7 @@ function createGame(canvasSelector) {
         bonusRadius = 10,
         score = 0,
         randomBonus = Math.random(),
-        randomNumber = 4,//Math.floor(Math.random() * 2) + 1 , setvam hardcore za testvane
+        randomNumber = Math.floor(Math.random() * 3) + 1 ,
 
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
@@ -434,7 +434,9 @@ function createGame(canvasSelector) {
             if(randomNumber===4){
                 pad.width *=2;
             }
+            if(randomNumber===5){
 
+            }
             console.log("bonus");
             context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
             return;
