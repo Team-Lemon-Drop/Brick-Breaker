@@ -23,7 +23,7 @@ function createGame(canvasSelector) {
         isBonusExisting = false,
         bonusColor = "#00FF00";
 
-        bricks = [],
+    bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
         numberOfBricksInCol = 5,
@@ -126,7 +126,7 @@ function createGame(canvasSelector) {
 
         bricks.some(checkCollission);
 
-        function checkCollission(brick){
+        function checkCollission(brick) {
             return collisionWithBricks(ball, brick);
         }
 
@@ -167,10 +167,10 @@ function createGame(canvasSelector) {
 
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
 
-                if(Math.random() > 0.5 && !isBonusExisting){
+                if (Math.random() > 0.5 && !isBonusExisting) {
                     isBonusExisting = true;
-                    bonusX = brick.x+brick.width/2;
-                    bonusY = brick.y+brick.height;
+                    bonusX = brick.x + brick.width / 2;
+                    bonusY = brick.y + brick.height;
                     moveBonus();
                 }
             }
@@ -370,7 +370,7 @@ function createGame(canvasSelector) {
 
         window.requestAnimationFrame(drawAll);
     }
-    
+
     drawAll();
 
     function isGameSuccess() {
@@ -394,72 +394,76 @@ function createGame(canvasSelector) {
             return false;
         }
     }
+
     function createBonus() {
 
     }
 
-    function drawBonus(bonusX , bonusY) {
+    function drawBonus(bonusX, bonusY) {
         //let image = new Image();
         //image.src = "bonus img";
         //let pattern = context.createPattern(image,'repeat');
         context.beginPath();
-        context.arc(bonusX, bonusY, bonusRadius, 0, Math.PI*2);
+        context.arc(bonusX, bonusY, bonusRadius, 0, Math.PI * 2);
         context.fillStyle = bonusColor;
         context.fill();
         context.closePath();
     }
 
     function moveBonus() {
-        context.clearRect(bonusX-bonusRadius, bonusY-2*bonusRadius, 2*bonusRadius, 2*bonusRadius);
-        bonusY += 1;
-        drawBonus(bonusX,bonusY);
+        context.clearRect(bonusX - bonusRadius, bonusY - 2 * bonusRadius, 2 * bonusRadius, 2 * bonusRadius);
+        bonusY += 3;
+        drawBonus(bonusX, bonusY);
 
-        window.requestAnimationFrame(moveBonus);
+        console.log(bonusY)
+        if (isBonusExisting) {
+            window.requestAnimationFrame(moveBonus);
+        }
         //context.clearRect(bonusX-bonusRadius, bonusY-bonusRadius, 2*bonusRadius, 2*bonusRadius);
         if (padCollisionWithBonus()) {
             var randomNumber = Math.floor(Math.random() * 3) + 1;
-            if(randomNumber === 1){
-                ball.speed *=2;
+            if (randomNumber === 1) {
+                ball.speed *= 2;
                 bonusColor = "#FF0000";
                 console.log("Double speed!");
             }
-            if(randomNumber === 2){
-                ball.speed /=2;
+            if (randomNumber === 2 && ball.speed > 3) {
+                ball.speed /= 2;
                 bonusColor = "#0000FF";
                 console.log("Half speed!");
             }
-            if(randomNumber ===3){
-                pad.width /=2;
+            if (randomNumber === 3) {
+                pad.width /= 2;
                 bonusColor = "#AA00AA";
                 console.log("Half pad!");
             }
-            if(randomNumber===4){
-                pad.width *=2;
+            if (randomNumber === 4) {
+                pad.width *= 2;
                 console.log("Double pad!");
             }
-            if(randomNumber===5){
+            if (randomNumber === 5) {
 
             }
             console.log("bonus");
-            context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
+            context.clearRect(bonusX - bonusRadius, bonusY - bonusRadius, 2 * bonusRadius, 2 * bonusRadius);
             return;
-        } 
-        
-        if (bonusY >= canvas.height+2*bonusRadius) {
-                isBonusExisting = false;
+        }
+
+        if (bonusY >= canvas.height + 2 * bonusRadius) {
+            isBonusExisting = false;
         }
     }
 
     function padCollisionWithBonus() {
         if (bonusX + bonusRadius > pad.x &&
-        bonusX - bonusRadius < pad.x + pad.width &&
-        bonusY + bonusRadius >= pad.y - pad.height && 
-        bonusY + bonusRadius <= canvas.height) {
+            bonusX - bonusRadius < pad.x + pad.width &&
+            bonusY + bonusRadius >= pad.y - pad.height &&
+            bonusY + bonusRadius <= canvas.height) {
 
-            bonusY=canvas.height+2*bonusRadius;
+            bonusY = canvas.height + 2 * bonusRadius;
             window.cancelAnimationFrame(moveBonus);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
