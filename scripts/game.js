@@ -415,7 +415,6 @@ function createGame(canvasSelector) {
         bonusY += 3;
         drawBonus(bonusX, bonusY);
 
-        console.log(bonusY)
         if (isBonusExisting) {
             window.requestAnimationFrame(moveBonus);
         }
@@ -427,7 +426,7 @@ function createGame(canvasSelector) {
                 bonusColor = "#FF0000";
                 console.log("Double speed!");
             }
-            if (randomNumber === 2 && ball.speed > 3) {
+            if (randomNumber === 2 && ball.speed >= 3) {
                 ball.speed /= 2;
                 bonusColor = "#0000FF";
                 console.log("Half speed!");
