@@ -44,7 +44,7 @@ var getStates = function () {
         rulesDiv.className = 'game-div';        
         heading.innerText = "Rules Of Game"; 
 
-        rule.innerText = '- press "SPACE" or click left mouse button to start the game \n- use " < " or " > " to move the pad';      
+        rule.innerText = '- press "SPACE" or double click left mouse button to start the game \n- use the mouse, " < " or " > " to move the pad';      
 
         warning.innerText=
         "Your goal is to destroy all the bricks. :-)\n"+
@@ -52,7 +52,8 @@ var getStates = function () {
 
         bonuses.innerText=
         "Also, there are bonuses.\n"+
-        "Some of the bricks you destroy will enlarge the pad\n"+
+        "Some of the bricks you destroy will enlarge the pad,\n"+
+        "others will make the ball's speed slower\n"+
         "and you will be able to catch the ball easier.\n"+
         "Have fun!";
         

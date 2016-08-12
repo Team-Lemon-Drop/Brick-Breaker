@@ -94,7 +94,7 @@ div#end-screen{
 
 h2.heading{
     text-align: center;
-    font-size: xx-large;
+    font-size: 28px;
     font-family: 'Times New Roman', Times, serif;
     color: cadetblue;
     text-shadow:2px 2px 5px white;    
@@ -104,7 +104,7 @@ h2.heading{
     display: block;
     margin-left: 40px;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 19px;
     color: darkgoldenrod;
 }
 
@@ -122,8 +122,8 @@ h2.heading{
 .bonuses{
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 500;
     color: chocolate;  
     text-shadow: 1px 1px 3px whitesmoke;
 }
@@ -139,7 +139,7 @@ h2.heading{
 }
 
     .team-members li{
-        padding: 3px;
+        padding: 3.5px;
         font-size: 24px;
     }
 
