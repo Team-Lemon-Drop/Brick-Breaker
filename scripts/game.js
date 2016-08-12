@@ -341,8 +341,11 @@ function createGame(canvasSelector) {
         } else {
             ball.x = canvas.width / 2 - ball.radius;
             ball.y = canvas.height - 50;
+            ball.speed = 3;
+            pad.width = 85;
             isMoving = false;
             pad.x = canvas.width / 2 - pad.width / 2;
+
         }
         console.log(lives);
     }
