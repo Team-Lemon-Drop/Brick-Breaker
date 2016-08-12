@@ -21,6 +21,7 @@ function createGame(canvasSelector) {
 
         bonusRadius = 10,
         isBonusExisting = false,
+        bonusColor = "#00FF00";
 
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
@@ -166,7 +167,7 @@ function createGame(canvasSelector) {
 
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
 
-                if(Math.random() > 0.8 && !isBonusExisting){
+                if(Math.random() > 0.5 && !isBonusExisting){
                     isBonusExisting = true;
                     bonusX = brick.x+brick.width/2;
                     bonusY = brick.y+brick.height;
@@ -403,7 +404,7 @@ function createGame(canvasSelector) {
         //let pattern = context.createPattern(image,'repeat');
         context.beginPath();
         context.arc(bonusX, bonusY, bonusRadius, 0, Math.PI*2);
-        context.fillStyle = "green";
+        context.fillStyle = bonusColor;
         context.fill();
         context.closePath();
     }
@@ -419,15 +420,22 @@ function createGame(canvasSelector) {
             var randomNumber = Math.floor(Math.random() * 3) + 1;
             if(randomNumber === 1){
                 ball.speed *=2;
+                bonusColor = "#FF0000";
+                console.log("Double speed!");
             }
             if(randomNumber === 2){
                 ball.speed /=2;
+                bonusColor = "#0000FF";
+                console.log("Half speed!");
             }
             if(randomNumber ===3){
                 pad.width /=2;
+                bonusColor = "#AA00AA";
+                console.log("Half pad!");
             }
             if(randomNumber===4){
                 pad.width *=2;
+                console.log("Double pad!");
             }
             if(randomNumber===5){
 
