@@ -2,6 +2,7 @@ function createGame(canvasSelector) {
     var canvas = document.querySelector(canvasSelector),
         context = canvas.getContext("2d"),
 
+        defaultBallSpeed = 3,
         ball = generateBall(),
         ballImage = new Image(),
         ballImagePath = "images/lemon-slice.png",
@@ -11,6 +12,7 @@ function createGame(canvasSelector) {
         prevCoordinatesY,
         isMoving = false,
 
+        defaultPadWidth = 85,
         pad = generatePad(),
         padMovingSpeed = 5,
         padOffset = 30,
@@ -18,6 +20,7 @@ function createGame(canvasSelector) {
         onRightArrowPressed = false,
 
         bonusRadius = 10,
+        isBonusExisting = false,
 
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
@@ -158,13 +161,15 @@ function createGame(canvasSelector) {
 
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
-                bonusX = brick.x+brick.width/2;
-                bonusY = brick.y+brick.height;
+
                 brick.isDestroyed = true;
 
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
 
-                if(Math.random() > 0.8){
+                if(Math.random() > 0.8 && !isBonusExisting){
+                    isBonusExisting = true;
+                    bonusX = brick.x+brick.width/2;
+                    bonusY = brick.y+brick.height;
                     moveBonus();
                 }
             }
@@ -341,8 +346,8 @@ function createGame(canvasSelector) {
         } else {
             ball.x = canvas.width / 2 - ball.radius;
             ball.y = canvas.height - 50;
-            ball.speed = 3;
-            pad.width = 85;
+            ball.speed = defaultBallSpeed;
+            pad.width = defaultPadWidth;
             isMoving = false;
             pad.x = canvas.width / 2 - pad.width / 2;
 
@@ -431,6 +436,10 @@ function createGame(canvasSelector) {
             context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
             return;
         } 
+        
+        if (bonusY >= canvas.height+2*bonusRadius) {
+                isBonusExisting = false;
+        }
     }
 
     function padCollisionWithBonus() {
