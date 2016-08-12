@@ -17,6 +17,8 @@ function createGame(canvasSelector) {
         onLeftArrowPressed = false,
         onRightArrowPressed = false,
 
+        bonusRadius = 10,
+
         bricks = [],
         bricksImagesPaths = ["images/brick.png", "images/purple-brick.png", "images/yellow-brick.png", "images/green-brick.png", "images/pink-brick.png"],
         numberOfBricksInRow = 8,
@@ -148,16 +150,23 @@ function createGame(canvasSelector) {
         }
 
         if ((side.x < 0 || side.y < 0) && brick.isDestroyed === false) {
+
             if (Math.abs(side.x) < ball.radius && side.y < 0) { // hits the top or the bottom of the brick
                 ballDeltaX = center.x * side.x < 0 ? -1 : 1;
-
                 brick.isDestroyed = true;
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
+
             } else if ((Math.abs(side.y) < ball.radius && side.x < 0) && brick.isDestroyed === false) { // hits a side of the brick
                 ballDeltaY = center.y * side.y < 0 ? -1 : 1;
-
+                bonusX = brick.x+brick.width/2;
+                bonusY = brick.y+brick.height;
                 brick.isDestroyed = true;
+
                 context.clearRect(brick.x, brick.y, brick.width, brick.height);
+
+                if(Math.random() > 0.8){
+                    moveBonus();
+                }
             }
 
             return;
@@ -347,6 +356,7 @@ function createGame(canvasSelector) {
     function drawAll(params) {
         movePad();
         printLives();
+        //moveBonus();
         //moveBall();
 
         window.requestAnimationFrame(drawAll);
@@ -375,6 +385,65 @@ function createGame(canvasSelector) {
             return false;
         }
     }
+    function createBonus() {
+
+    }
+
+    function drawBonus(bonusX , bonusY) {
+        //let image = new Image();
+        //image.src = "bonus img";
+        //let pattern = context.createPattern(image,'repeat');
+        context.beginPath();
+        context.arc(bonusX, bonusY, bonusRadius, 0, Math.PI*2);
+        context.fillStyle = "green";
+        context.fill();
+        context.closePath();
+    }
+
+    function moveBonus() {
+        context.clearRect(bonusX-bonusRadius, bonusY-2*bonusRadius, 2*bonusRadius, 2*bonusRadius);
+        bonusY += 1;
+        drawBonus(bonusX,bonusY);
+
+        window.requestAnimationFrame(moveBonus);
+        //context.clearRect(bonusX-bonusRadius, bonusY-bonusRadius, 2*bonusRadius, 2*bonusRadius);
+        if (padCollisionWithBonus()) {
+            var randomNumber = Math.floor(Math.random() * 3) + 1;
+            if(randomNumber === 1){
+                ball.speed *=2;
+            }
+            if(randomNumber === 2){
+                ball.speed /=2;
+            }
+            if(randomNumber ===3){
+                pad.width /=2;
+            }
+            if(randomNumber===4){
+                pad.width *=2;
+            }
+            if(randomNumber===5){
+
+            }
+            console.log("bonus");
+            context.clearRect(bonusX-bonusRadius,bonusY-bonusRadius,2*bonusRadius, 2*bonusRadius);
+            return;
+        } 
+    }
+
+    function padCollisionWithBonus() {
+        if (bonusX + bonusRadius > pad.x &&
+        bonusX - bonusRadius < pad.x + pad.width &&
+        bonusY + bonusRadius >= pad.y - pad.height && 
+        bonusY + bonusRadius <= canvas.height) {
+
+            bonusY=canvas.height+2*bonusRadius;
+            window.cancelAnimationFrame(moveBonus);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     return {
         "start": function() {

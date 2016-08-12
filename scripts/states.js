@@ -29,12 +29,14 @@ var getStates = function () {
     var showRules = function () {    
         var heading = document.createElement("h2"),
             rule = document.createElement("p"),
-            warning = document.createElement("p");
+            warning = document.createElement("p"),
+            bonuses=document.createElement("p");
 
         backButton.innerText = "Go back";
         rule.className='rules';
         warning.className='warning';
         heading.className = 'heading';
+        bonuses.className='bonuses';
 
         rulesDiv.style.display = '';
         menu.style.display = 'none';
@@ -42,15 +44,22 @@ var getStates = function () {
         rulesDiv.className = 'game-div';        
         heading.innerText = "Rules Of Game"; 
 
-        rule.innerText = '- press "SPACE" to start the game \n- use " < " or " > " to move the pad';      
+        rule.innerText = '- press "SPACE" or click left mouse button to start the game \n- use " < " or " > " to move the pad';      
 
         warning.innerText=
         "Your goal is to destroy all the bricks. :-)\n"+
         "You shouldn't let the ball hit the floor! \nYou have exactly 3 lives!";
+
+        bonuses.innerText=
+        "Also, there are bonuses.\n"+
+        "Some of the bricks you destroy will enlarge the pad\n"+
+        "and you will be able to catch the ball easier.\n"+
+        "Have fun!";
         
         rulesDiv.appendChild(heading);
         rulesDiv.appendChild(rule);
         rulesDiv.appendChild(warning);
+        rulesDiv.appendChild(bonuses);
         rulesDiv.appendChild(backButton);
         section.appendChild(rulesDiv);
     };
